@@ -1,6 +1,6 @@
 -- Database generated with pgModeler (PostgreSQL Database Modeler).
 -- pgModeler  version: 0.9.1-beta
--- PostgreSQL version: 10.0
+-- PostgreSQL version: 9.6
 -- Project Site: pgmodeler.com.br
 -- Model Author: ---
 
@@ -127,7 +127,6 @@ ALTER SEQUENCE public.address_seq OWNER TO postgres;
 -- DROP TABLE IF EXISTS public.address CASCADE;
 CREATE TABLE public.address(
 	id bigint NOT NULL DEFAULT nextval('public.address_seq'::regclass),
-	user_address_id bigint NOT NULL,
 	street_name text NOT NULL,
 	house_number text,
 	postal_code text,
@@ -169,6 +168,7 @@ CREATE TABLE public.email(
 	created_by text NOT NULL,
 	updated_on timestamp,
 	updated_by smallint NOT NULL,
+	status smallint NOT NULL,
 	user_id bigint,
 	CONSTRAINT email_pk PRIMARY KEY (id),
 	CONSTRAINT udx_email_address UNIQUE (email_address)
@@ -197,7 +197,7 @@ ALTER SEQUENCE public.business_seq OWNER TO postgres;
 CREATE TABLE public.business(
 	id bigint NOT NULL DEFAULT nextval('public.business_seq'::regclass),
 	business_name text NOT NULL,
-	business_owner bigint NOT NULL,
+	business_owner_id bigint NOT NULL,
 	status smallint NOT NULL,
 	tax_id text NOT NULL,
 	national_id text NOT NULL,
@@ -236,6 +236,10 @@ ALTER SEQUENCE public.business_role_seq OWNER TO postgres;
 CREATE TABLE public.business_role(
 	id bigint NOT NULL DEFAULT nextval('public.business_role_seq'::regclass),
 	status smallint NOT NULL,
+	created_on timestamp NOT NULL,
+	created_by text NOT NULL,
+	updated_on timestamp,
+	updated_by text,
 	business_staff_id bigint,
 	business_role_type_id bigint,
 	CONSTRAINT business_role_pk PRIMARY KEY (id)
@@ -264,6 +268,7 @@ ALTER SEQUENCE public.business_role_type OWNER TO postgres;
 CREATE TABLE public.business_role_type(
 	id bigint NOT NULL DEFAULT nextval('public.business_role_type'::regclass),
 	business_role_name text NOT NULL,
+	status smallint NOT NULL,
 	created_on timestamp NOT NULL,
 	created_by text NOT NULL,
 	updated_on timestamp,
@@ -418,8 +423,8 @@ CREATE TABLE public.pet(
 	id bigint NOT NULL DEFAULT nextval('public.pet_seq'::regclass),
 	name text NOT NULL,
 	date_of_birth timestamp NOT NULL,
-	status smallint NOT NULL,
 	note text,
+	status smallint NOT NULL,
 	created_on timestamp NOT NULL,
 	created_by text NOT NULL,
 	updated_on timestamp,
@@ -685,6 +690,11 @@ CREATE TABLE public.medication(
 	name text NOT NULL,
 	description text NOT NULL,
 	dose text,
+	created_on timestamp NOT NULL,
+	created_by text NOT NULL,
+	updated_on timestamp,
+	updated_by text,
+	status smallint NOT NULL,
 	CONSTRAINT medication_pk PRIMARY KEY (id),
 	CONSTRAINT udx_medication_name UNIQUE (name)
 
@@ -811,6 +821,98 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE public.therapy_medication ADD CONSTRAINT therapy_fk FOREIGN KEY (therapy_id)
 REFERENCES public.therapy (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: public.business_address_seq | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.business_address_seq CASCADE;
+CREATE SEQUENCE public.business_address_seq
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 100
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE public.business_address_seq OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.business_address | type: TABLE --
+-- DROP TABLE IF EXISTS public.business_address CASCADE;
+CREATE TABLE public.business_address(
+	id bigint NOT NULL DEFAULT nextval('public.business_address_seq'::regclass),
+	business_id bigint,
+	address_id bigint,
+	CONSTRAINT business_address_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.business_address OWNER TO postgres;
+-- ddl-end --
+
+-- object: business_fk | type: CONSTRAINT --
+-- ALTER TABLE public.business_address DROP CONSTRAINT IF EXISTS business_fk CASCADE;
+ALTER TABLE public.business_address ADD CONSTRAINT business_fk FOREIGN KEY (business_id)
+REFERENCES public.business (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: address_fk | type: CONSTRAINT --
+-- ALTER TABLE public.business_address DROP CONSTRAINT IF EXISTS address_fk CASCADE;
+ALTER TABLE public.business_address ADD CONSTRAINT address_fk FOREIGN KEY (address_id)
+REFERENCES public.address (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: business_address_uq | type: CONSTRAINT --
+-- ALTER TABLE public.business_address DROP CONSTRAINT IF EXISTS business_address_uq CASCADE;
+ALTER TABLE public.business_address ADD CONSTRAINT business_address_uq UNIQUE (address_id);
+-- ddl-end --
+
+-- object: public.business_phone_seq | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.business_phone_seq CASCADE;
+CREATE SEQUENCE public.business_phone_seq
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 100
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+ALTER SEQUENCE public.business_phone_seq OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.business_phone | type: TABLE --
+-- DROP TABLE IF EXISTS public.business_phone CASCADE;
+CREATE TABLE public.business_phone(
+	id bigint NOT NULL DEFAULT nextval('public.business_phone_seq'::regclass),
+	business_id bigint,
+	phone_id smallint,
+	CONSTRAINT business_phone_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.business_phone OWNER TO postgres;
+-- ddl-end --
+
+-- object: business_fk | type: CONSTRAINT --
+-- ALTER TABLE public.business_phone DROP CONSTRAINT IF EXISTS business_fk CASCADE;
+ALTER TABLE public.business_phone ADD CONSTRAINT business_fk FOREIGN KEY (business_id)
+REFERENCES public.business (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: phone_fk | type: CONSTRAINT --
+-- ALTER TABLE public.business_phone DROP CONSTRAINT IF EXISTS phone_fk CASCADE;
+ALTER TABLE public.business_phone ADD CONSTRAINT phone_fk FOREIGN KEY (phone_id)
+REFERENCES public.phone (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: business_phone_uq | type: CONSTRAINT --
+-- ALTER TABLE public.business_phone DROP CONSTRAINT IF EXISTS business_phone_uq CASCADE;
+ALTER TABLE public.business_phone ADD CONSTRAINT business_phone_uq UNIQUE (phone_id);
 -- ddl-end --
 
 
