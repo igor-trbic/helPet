@@ -1,3 +1,4 @@
+# delete later
 template: Hello, %s!
 defaultName: Stranger
 
@@ -5,3 +6,50 @@ logging:
   level: INFO
   loggers:
     helPet: DEBUG
+
+database:
+  driverClass: org.postgresql.Driver
+  user: helpet
+  password: helpet
+  url: jdbc:postgresql://localhost/helpet
+  properties:
+    vendor: postgresql1
+    charSet: UTF-8
+  maxWaitForConnection: 30s
+  validationQuery: "/* helPet Health Check */ SELECT 1"
+  minSize: 8
+  maxSize: 50
+  checkConnectionWhileIdle: false
+  evictionInterval: 10s
+  minIdleTime: 1 minute
+
+# HTTP-specific options.
+# http://dropwizard.io/manual/configuration.html#http
+server:
+  adminMinThreads: 1
+  adminMaxThreads: 64
+  applicationConnectors:
+    - type: http
+      port: 8080
+    - type: https
+      port: 9090
+      keyStorePath: keystore.jks
+      keyStorePassword: password
+      validateCerts: false
+      validatePeers: false
+  adminConnectors:
+    - type: http
+      port: 8081
+
+  requestLog:
+    type: classic
+    #    timeZone: UTC
+    appenders:
+      - type: console
+#      - type: file
+#        currentLogFilename: log/access.log
+#        threshold: OFF
+#        timeZone: CET
+##        archive: true
+#        archivedLogFilenamePattern: log/access.%d.log.gz
+##        archivedFileCount: 14

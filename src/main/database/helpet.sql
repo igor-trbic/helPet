@@ -25,7 +25,7 @@ CREATE SEQUENCE public.users_sequence
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.users_sequence OWNER TO postgres;
+ALTER SEQUENCE public.users_sequence OWNER TO helpet;
 -- ddl-end --
 
 -- object: public."user" | type: TABLE --
@@ -41,13 +41,13 @@ CREATE TABLE public."user"(
 	created_on timestamp NOT NULL,
 	created_by text NOT NULL,
 	updated_on timestamp,
-	updated_by timestamp,
+	updated_by text,
 	CONSTRAINT users_pk PRIMARY KEY (id),
 	CONSTRAINT udx_username UNIQUE (username)
 
 );
 -- ddl-end --
-ALTER TABLE public."user" OWNER TO postgres;
+ALTER TABLE public."user" OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.phone_sequence | type: SEQUENCE --
@@ -61,7 +61,7 @@ CREATE SEQUENCE public.phone_sequence
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.phone_sequence OWNER TO postgres;
+ALTER SEQUENCE public.phone_sequence OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.phone | type: TABLE --
@@ -80,7 +80,7 @@ CREATE TABLE public.phone(
 
 );
 -- ddl-end --
-ALTER TABLE public.phone OWNER TO postgres;
+ALTER TABLE public.phone OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.user_phone | type: TABLE --
@@ -93,7 +93,7 @@ CREATE TABLE public.user_phone(
 
 );
 -- ddl-end --
-ALTER TABLE public.user_phone OWNER TO postgres;
+ALTER TABLE public.user_phone OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.user_address | type: TABLE --
@@ -106,7 +106,7 @@ CREATE TABLE public.user_address(
 
 );
 -- ddl-end --
-ALTER TABLE public.user_address OWNER TO postgres;
+ALTER TABLE public.user_address OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.address_seq | type: SEQUENCE --
@@ -120,7 +120,7 @@ CREATE SEQUENCE public.address_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.address_seq OWNER TO postgres;
+ALTER SEQUENCE public.address_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.address | type: TABLE --
@@ -140,7 +140,7 @@ CREATE TABLE public.address(
 
 );
 -- ddl-end --
-ALTER TABLE public.address OWNER TO postgres;
+ALTER TABLE public.address OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.email_seq | type: SEQUENCE --
@@ -154,7 +154,7 @@ CREATE SEQUENCE public.email_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.email_seq OWNER TO postgres;
+ALTER SEQUENCE public.email_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.email | type: TABLE --
@@ -175,7 +175,7 @@ CREATE TABLE public.email(
 
 );
 -- ddl-end --
-ALTER TABLE public.email OWNER TO postgres;
+ALTER TABLE public.email OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_seq | type: SEQUENCE --
@@ -189,7 +189,7 @@ CREATE SEQUENCE public.business_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_seq OWNER TO postgres;
+ALTER SEQUENCE public.business_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business | type: TABLE --
@@ -214,7 +214,7 @@ COMMENT ON COLUMN public.business.tax_id IS 'PIB';
 -- ddl-end --
 COMMENT ON COLUMN public.business.national_id IS 'MB';
 -- ddl-end --
-ALTER TABLE public.business OWNER TO postgres;
+ALTER TABLE public.business OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_role_seq | type: SEQUENCE --
@@ -228,7 +228,7 @@ CREATE SEQUENCE public.business_role_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_role_seq OWNER TO postgres;
+ALTER SEQUENCE public.business_role_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_role | type: TABLE --
@@ -246,7 +246,7 @@ CREATE TABLE public.business_role(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_role OWNER TO postgres;
+ALTER TABLE public.business_role OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_role_type | type: SEQUENCE --
@@ -260,7 +260,7 @@ CREATE SEQUENCE public.business_role_type
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_role_type OWNER TO postgres;
+ALTER SEQUENCE public.business_role_type OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_role_type | type: TABLE --
@@ -278,7 +278,7 @@ CREATE TABLE public.business_role_type(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_role_type OWNER TO postgres;
+ALTER TABLE public.business_role_type OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_staff_seq | type: SEQUENCE --
@@ -292,7 +292,7 @@ CREATE SEQUENCE public.business_staff_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_staff_seq OWNER TO postgres;
+ALTER SEQUENCE public.business_staff_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_staff | type: TABLE --
@@ -305,7 +305,7 @@ CREATE TABLE public.business_staff(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_staff OWNER TO postgres;
+ALTER TABLE public.business_staff OWNER TO helpet;
 -- ddl-end --
 
 -- object: address_fk | type: CONSTRAINT --
@@ -414,7 +414,7 @@ CREATE SEQUENCE public.pet_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.pet_seq OWNER TO postgres;
+ALTER SEQUENCE public.pet_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.pet | type: TABLE --
@@ -433,7 +433,7 @@ CREATE TABLE public.pet(
 
 );
 -- ddl-end --
-ALTER TABLE public.pet OWNER TO postgres;
+ALTER TABLE public.pet OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.pet_owner_seq | type: SEQUENCE --
@@ -447,7 +447,7 @@ CREATE SEQUENCE public.pet_owner_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.pet_owner_seq OWNER TO postgres;
+ALTER SEQUENCE public.pet_owner_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.pet_owner | type: TABLE --
@@ -460,7 +460,7 @@ CREATE TABLE public.pet_owner(
 
 );
 -- ddl-end --
-ALTER TABLE public.pet_owner OWNER TO postgres;
+ALTER TABLE public.pet_owner OWNER TO helpet;
 -- ddl-end --
 
 -- object: user_fk | type: CONSTRAINT --
@@ -493,7 +493,7 @@ CREATE SEQUENCE public.pet_attribute_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.pet_attribute_seq OWNER TO postgres;
+ALTER SEQUENCE public.pet_attribute_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.pet_attribute | type: TABLE --
@@ -512,7 +512,7 @@ CREATE TABLE public.pet_attribute(
 
 );
 -- ddl-end --
-ALTER TABLE public.pet_attribute OWNER TO postgres;
+ALTER TABLE public.pet_attribute OWNER TO helpet;
 -- ddl-end --
 
 -- object: pet_fk | type: CONSTRAINT --
@@ -533,7 +533,7 @@ CREATE SEQUENCE public.appointment_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.appointment_seq OWNER TO postgres;
+ALTER SEQUENCE public.appointment_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.appointment | type: TABLE --
@@ -553,7 +553,7 @@ CREATE TABLE public.appointment(
 
 );
 -- ddl-end --
-ALTER TABLE public.appointment OWNER TO postgres;
+ALTER TABLE public.appointment OWNER TO helpet;
 -- ddl-end --
 
 -- object: business_fk | type: CONSTRAINT --
@@ -593,7 +593,7 @@ CREATE SEQUENCE public.therapy_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.therapy_seq OWNER TO postgres;
+ALTER SEQUENCE public.therapy_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.therapy | type: TABLE --
@@ -609,7 +609,7 @@ CREATE TABLE public.therapy(
 
 );
 -- ddl-end --
-ALTER TABLE public.therapy OWNER TO postgres;
+ALTER TABLE public.therapy OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.examination_seq | type: SEQUENCE --
@@ -623,7 +623,7 @@ CREATE SEQUENCE public.examination_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.examination_seq OWNER TO postgres;
+ALTER SEQUENCE public.examination_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.examination | type: TABLE --
@@ -638,7 +638,7 @@ CREATE TABLE public.examination(
 
 );
 -- ddl-end --
-ALTER TABLE public.examination OWNER TO postgres;
+ALTER TABLE public.examination OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.diagnose_seq | type: SEQUENCE --
@@ -652,7 +652,7 @@ CREATE SEQUENCE public.diagnose_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.diagnose_seq OWNER TO postgres;
+ALTER SEQUENCE public.diagnose_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.diagnose | type: TABLE --
@@ -666,7 +666,7 @@ CREATE TABLE public.diagnose(
 
 );
 -- ddl-end --
-ALTER TABLE public.diagnose OWNER TO postgres;
+ALTER TABLE public.diagnose OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.medication_seq | type: SEQUENCE --
@@ -680,7 +680,7 @@ CREATE SEQUENCE public.medication_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.medication_seq OWNER TO postgres;
+ALTER SEQUENCE public.medication_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.medication | type: TABLE --
@@ -700,7 +700,7 @@ CREATE TABLE public.medication(
 
 );
 -- ddl-end --
-ALTER TABLE public.medication OWNER TO postgres;
+ALTER TABLE public.medication OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.therapy_frequency_seq | type: SEQUENCE --
@@ -714,7 +714,7 @@ CREATE SEQUENCE public.therapy_frequency_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.therapy_frequency_seq OWNER TO postgres;
+ALTER SEQUENCE public.therapy_frequency_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.therapy_frequency | type: TABLE --
@@ -731,7 +731,7 @@ CREATE TABLE public.therapy_frequency(
 
 );
 -- ddl-end --
-ALTER TABLE public.therapy_frequency OWNER TO postgres;
+ALTER TABLE public.therapy_frequency OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.therapy_medication_seq | type: SEQUENCE --
@@ -745,7 +745,7 @@ CREATE SEQUENCE public.therapy_medication_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.therapy_medication_seq OWNER TO postgres;
+ALTER SEQUENCE public.therapy_medication_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.therapy_medication | type: TABLE --
@@ -763,7 +763,7 @@ CREATE TABLE public.therapy_medication(
 
 );
 -- ddl-end --
-ALTER TABLE public.therapy_medication OWNER TO postgres;
+ALTER TABLE public.therapy_medication OWNER TO helpet;
 -- ddl-end --
 
 -- object: appointment_fk | type: CONSTRAINT --
@@ -834,7 +834,7 @@ CREATE SEQUENCE public.business_address_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_address_seq OWNER TO postgres;
+ALTER SEQUENCE public.business_address_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_address | type: TABLE --
@@ -847,7 +847,7 @@ CREATE TABLE public.business_address(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_address OWNER TO postgres;
+ALTER TABLE public.business_address OWNER TO helpet;
 -- ddl-end --
 
 -- object: business_fk | type: CONSTRAINT --
@@ -880,7 +880,7 @@ CREATE SEQUENCE public.business_phone_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_phone_seq OWNER TO postgres;
+ALTER SEQUENCE public.business_phone_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_phone | type: TABLE --
@@ -893,7 +893,7 @@ CREATE TABLE public.business_phone(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_phone OWNER TO postgres;
+ALTER TABLE public.business_phone OWNER TO helpet;
 -- ddl-end --
 
 -- object: business_fk | type: CONSTRAINT --

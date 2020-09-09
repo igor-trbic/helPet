@@ -2,13 +2,15 @@ package helPet.entity;
 
 import helPet.entity.util.EntityWithStatus;
 
+import java.util.Date;
+
 public class User extends EntityWithStatus {
     private Long id;
     private String username;
     private String password;
     private String firstName;
     private String lastName;
-    private String dateOfBirth;
+    private Date dateOfBirth;
 
     public Long getId() {
         return id;
@@ -50,11 +52,11 @@ public class User extends EntityWithStatus {
         this.lastName = lastName;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

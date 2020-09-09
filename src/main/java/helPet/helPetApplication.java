@@ -3,8 +3,10 @@ package helPet;
 import helPet.health.TemplateHealthCheck;
 //import helPet.resources.HelloWorldResource;
 import io.dropwizard.Application;
+import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.jdbi.v3.core.Jdbi;
 
 public class helPetApplication extends Application<helPetConfiguration> {
 
@@ -35,6 +37,9 @@ public class helPetApplication extends Application<helPetConfiguration> {
                 new TemplateHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
 //        environment.jersey().register(resource);
+        final JdbiFactory factory = new JdbiFactory();
+        final Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
+//        environment.jersey().register(new UserResource(jdbi));
     }
 
 }
