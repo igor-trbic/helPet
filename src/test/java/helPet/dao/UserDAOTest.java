@@ -44,10 +44,13 @@ public class UserDAOTest extends BaseTest {
         assertNotNull(updated);
         assertEquals(user.getFirstName(), STR_SAMPLE_3);
 
-        int del = userDAO.delete(user.getId(), CREATED_BY);
+        int del = userDAO.remove(user.getId(), CREATED_BY);
         assertNotNull(del);
 
         User deleted = userDAO.find(user.getId());
         assertNull(deleted);
+
+        h.rollback();
+        h.close();
     }
 }

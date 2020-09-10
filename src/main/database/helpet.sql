@@ -96,17 +96,18 @@ CREATE TABLE public.user_phone(
 ALTER TABLE public.user_phone OWNER TO helpet;
 -- ddl-end --
 
--- object: public.user_address | type: TABLE --
--- DROP TABLE IF EXISTS public.user_address CASCADE;
-CREATE TABLE public.user_address(
-	id bigint NOT NULL,
-	address_id bigint,
-	user_id bigint,
-	CONSTRAINT users_address_pk PRIMARY KEY (id)
-
-);
+-- object: public.user_address_seq | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.user_address_seq CASCADE;
+CREATE SEQUENCE public.user_address_seq
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 100
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
 -- ddl-end --
-ALTER TABLE public.user_address OWNER TO helpet;
+ALTER SEQUENCE public.user_address_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.address_seq | type: SEQUENCE --
@@ -308,16 +309,17 @@ CREATE TABLE public.business_staff(
 ALTER TABLE public.business_staff OWNER TO helpet;
 -- ddl-end --
 
--- object: address_fk | type: CONSTRAINT --
--- ALTER TABLE public.user_address DROP CONSTRAINT IF EXISTS address_fk CASCADE;
-ALTER TABLE public.user_address ADD CONSTRAINT address_fk FOREIGN KEY (address_id)
-REFERENCES public.address (id) MATCH FULL
-ON DELETE SET NULL ON UPDATE CASCADE;
--- ddl-end --
+-- object: public.user_address | type: TABLE --
+-- DROP TABLE IF EXISTS public.user_address CASCADE;
+CREATE TABLE public.user_address(
+	id bigint NOT NULL DEFAULT nextval('public.user_address_seq'::regclass),
+	address_id bigint,
+	user_id bigint,
+	CONSTRAINT users_address_pk PRIMARY KEY (id)
 
--- object: user_address_uq | type: CONSTRAINT --
--- ALTER TABLE public.user_address DROP CONSTRAINT IF EXISTS user_address_uq CASCADE;
-ALTER TABLE public.user_address ADD CONSTRAINT user_address_uq UNIQUE (address_id);
+);
+-- ddl-end --
+ALTER TABLE public.user_address OWNER TO helpet;
 -- ddl-end --
 
 -- object: user_fk | type: CONSTRAINT --
@@ -913,6 +915,18 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 -- object: business_phone_uq | type: CONSTRAINT --
 -- ALTER TABLE public.business_phone DROP CONSTRAINT IF EXISTS business_phone_uq CASCADE;
 ALTER TABLE public.business_phone ADD CONSTRAINT business_phone_uq UNIQUE (phone_id);
+-- ddl-end --
+
+-- object: address_fk | type: CONSTRAINT --
+-- ALTER TABLE public.user_address DROP CONSTRAINT IF EXISTS address_fk CASCADE;
+ALTER TABLE public.user_address ADD CONSTRAINT address_fk FOREIGN KEY (address_id)
+REFERENCES public.address (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: user_address_uq | type: CONSTRAINT --
+-- ALTER TABLE public.user_address DROP CONSTRAINT IF EXISTS user_address_uq CASCADE;
+ALTER TABLE public.user_address ADD CONSTRAINT user_address_uq UNIQUE (address_id);
 -- ddl-end --
 
 

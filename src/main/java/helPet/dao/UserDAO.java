@@ -16,7 +16,7 @@ public interface UserDAO extends Transactional<UserDAO> {
     @GetGeneratedKeys
     long insert(@BindBean User user);
 
-    @SqlUpdate("UPDATE public.user SET username = :username, password = :password, first_name = :firstName, last_name = :lastName, date_of_birth = :dateOfBirth, updated_on = localtimestamp, updated_by = :updatedBy WHERE id = :id")
+    @SqlUpdate("UPDATE public.user SET username = :username, password = :password, first_name = :firstName, last_name = :lastName, date_of_birth = :dateOfBirth, status = :status, updated_on = localtimestamp, updated_by = :updatedBy WHERE id = :id")
     int update(@BindBean User user);
 
     @SqlQuery("SELECT * FROM public.user WHERE id = :id AND status != 109")
@@ -24,6 +24,6 @@ public interface UserDAO extends Transactional<UserDAO> {
     User find(@Bind("id") Long id);
 
     @SqlUpdate("UPDATE public.user SET status = 109, updated_by = :user, updated_on = localtimestamp WHERE id = :id")
-    int delete(@Bind("id") Long id, @Bind("user") String user);
+    int remove(@Bind("id") Long id, @Bind("user") String user);
 
 }
