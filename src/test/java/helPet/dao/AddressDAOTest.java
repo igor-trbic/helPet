@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNull;
 
 public class AddressDAOTest extends BaseTest {
     @Test
-    public void createUser() {
+    public void testAddress() {
         Handle h = dbi.open();
         AddressDAO addressDAO = h.attach(AddressDAO.class);
 
@@ -29,7 +29,7 @@ public class AddressDAOTest extends BaseTest {
         long id = addressDAO.insert(address);
         address.setId(id);
 
-        Address found = addressDAO.find(address.getId());
+        Address found = addressDAO.findActive(address.getId());
         assertNotNull(found);
         assertEquals(found.getStreetName(), STR_SAMPLE_1);
 
@@ -43,7 +43,7 @@ public class AddressDAOTest extends BaseTest {
         int del = addressDAO.remove(address.getId(), CREATED_BY);
         assertNotNull(del);
 
-        Address deleted = addressDAO.find(address.getId());
+        Address deleted = addressDAO.findActive(address.getId());
         assertNull(deleted);
 
         h.rollback();

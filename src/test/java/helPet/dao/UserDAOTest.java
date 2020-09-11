@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNull;
 
 public class UserDAOTest extends BaseTest {
     @Test
-    public void createUser() {
+    public void testUser() {
         Handle h = dbi.open();
         UserDAO userDAO = h.attach(UserDAO.class);
 
@@ -33,7 +33,7 @@ public class UserDAOTest extends BaseTest {
         long id = userDAO.insert(user);
         user.setId(id);
 
-        User found = userDAO.find(user.getId());
+        User found = userDAO.findActive(user.getId());
         assertNotNull(found);
         assertEquals(found.getFirstName(), STR_SAMPLE_2);
 
@@ -47,7 +47,7 @@ public class UserDAOTest extends BaseTest {
         int del = userDAO.remove(user.getId(), CREATED_BY);
         assertNotNull(del);
 
-        User deleted = userDAO.find(user.getId());
+        User deleted = userDAO.findActive(user.getId());
         assertNull(deleted);
 
         h.rollback();

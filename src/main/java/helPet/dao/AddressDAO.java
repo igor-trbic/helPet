@@ -12,7 +12,7 @@ import org.jdbi.v3.sqlobject.transaction.Transactional;
 
 public interface AddressDAO extends Transactional<AddressDAO> {
     @SqlUpdate("INSERT INTO public.address (id, street_name, house_number, postal_code, address_type, status, created_on, created_by, updated_on, updated_by " +
-            " ) VALUES ( nextval('address_seq'), :streetName, :houseNumber, :postalCode, :addressType, :status, localtimestamp, :createdBy, null, null)")
+               " ) VALUES ( nextval('address_seq'), :streetName, :houseNumber, :postalCode, :addressType, :status, localtimestamp, :createdBy, null, null)")
     @GetGeneratedKeys
     long insert(@BindBean Address address);
 
@@ -21,7 +21,7 @@ public interface AddressDAO extends Transactional<AddressDAO> {
 
     @SqlQuery("SELECT * FROM public.address WHERE id = :id AND status != 109")
     @UseRowMapper(AddressMapper.class)
-    Address find(@Bind("id") Long id);
+    Address findActive(@Bind("id") Long id);
 
     @SqlUpdate("UPDATE public.address SET status = 109, updated_by = :user, updated_on = localtimestamp WHERE id = :id")
     int remove(@Bind("id") Long id, @Bind("user") String user);

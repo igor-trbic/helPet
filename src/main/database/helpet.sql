@@ -67,7 +67,7 @@ ALTER SEQUENCE public.phone_sequence OWNER TO helpet;
 -- object: public.phone | type: TABLE --
 -- DROP TABLE IF EXISTS public.phone CASCADE;
 CREATE TABLE public.phone(
-	id smallint NOT NULL,
+	id smallint NOT NULL DEFAULT nextval('public.phone_sequence'::regclass),
 	phone_number text NOT NULL,
 	phone_type text NOT NULL,
 	status smallint NOT NULL,
@@ -83,17 +83,18 @@ CREATE TABLE public.phone(
 ALTER TABLE public.phone OWNER TO helpet;
 -- ddl-end --
 
--- object: public.user_phone | type: TABLE --
--- DROP TABLE IF EXISTS public.user_phone CASCADE;
-CREATE TABLE public.user_phone(
-	id bigint NOT NULL DEFAULT nextval('public.phone_sequence'::regclass),
-	user_id bigint,
-	phone_id smallint,
-	CONSTRAINT users_phone_pk PRIMARY KEY (id)
-
-);
+-- object: public.user_phone_seq | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.user_phone_seq CASCADE;
+CREATE SEQUENCE public.user_phone_seq
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 100
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
 -- ddl-end --
-ALTER TABLE public.user_phone OWNER TO helpet;
+ALTER SEQUENCE public.user_phone_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.user_address_seq | type: SEQUENCE --
@@ -168,7 +169,7 @@ CREATE TABLE public.email(
 	created_on timestamp NOT NULL,
 	created_by text NOT NULL,
 	updated_on timestamp,
-	updated_by smallint NOT NULL,
+	updated_by text,
 	status smallint NOT NULL,
 	user_id bigint,
 	CONSTRAINT email_pk PRIMARY KEY (id),
@@ -250,9 +251,9 @@ CREATE TABLE public.business_role(
 ALTER TABLE public.business_role OWNER TO helpet;
 -- ddl-end --
 
--- object: public.business_role_type | type: SEQUENCE --
--- DROP SEQUENCE IF EXISTS public.business_role_type CASCADE;
-CREATE SEQUENCE public.business_role_type
+-- object: public.business_role_type_seq | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.business_role_type_seq CASCADE;
+CREATE SEQUENCE public.business_role_type_seq
 	INCREMENT BY 1
 	MINVALUE 0
 	MAXVALUE 2147483647
@@ -261,13 +262,13 @@ CREATE SEQUENCE public.business_role_type
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_role_type OWNER TO helpet;
+ALTER SEQUENCE public.business_role_type_seq OWNER TO helpet;
 -- ddl-end --
 
 -- object: public.business_role_type | type: TABLE --
 -- DROP TABLE IF EXISTS public.business_role_type CASCADE;
 CREATE TABLE public.business_role_type(
-	id bigint NOT NULL DEFAULT nextval('public.business_role_type'::regclass),
+	id bigint NOT NULL DEFAULT nextval('public.business_role_type_seq'::regclass),
 	business_role_name text NOT NULL,
 	status smallint NOT NULL,
 	created_on timestamp NOT NULL,
@@ -329,11 +330,17 @@ REFERENCES public."user" (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: user_fk | type: CONSTRAINT --
--- ALTER TABLE public.user_phone DROP CONSTRAINT IF EXISTS user_fk CASCADE;
-ALTER TABLE public.user_phone ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
-REFERENCES public."user" (id) MATCH FULL
-ON DELETE SET NULL ON UPDATE CASCADE;
+-- object: public.user_phone | type: TABLE --
+-- DROP TABLE IF EXISTS public.user_phone CASCADE;
+CREATE TABLE public.user_phone(
+	id bigint NOT NULL DEFAULT nextval('public.user_phone_seq'::regclass),
+	user_id bigint,
+	phone_id smallint,
+	CONSTRAINT users_phone_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.user_phone OWNER TO helpet;
 -- ddl-end --
 
 -- object: phone_fk | type: CONSTRAINT --
@@ -927,6 +934,13 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 -- object: user_address_uq | type: CONSTRAINT --
 -- ALTER TABLE public.user_address DROP CONSTRAINT IF EXISTS user_address_uq CASCADE;
 ALTER TABLE public.user_address ADD CONSTRAINT user_address_uq UNIQUE (address_id);
+-- ddl-end --
+
+-- object: user_fk | type: CONSTRAINT --
+-- ALTER TABLE public.user_phone DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public.user_phone ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+REFERENCES public."user" (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
 

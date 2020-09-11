@@ -21,7 +21,7 @@ public interface UserDAO extends Transactional<UserDAO> {
 
     @SqlQuery("SELECT * FROM public.user WHERE id = :id AND status != 109")
     @UseRowMapper(UserMapper.class)
-    User find(@Bind("id") Long id);
+    User findActive(@Bind("id") Long id);
 
     @SqlUpdate("UPDATE public.user SET status = 109, updated_by = :user, updated_on = localtimestamp WHERE id = :id")
     int remove(@Bind("id") Long id, @Bind("user") String user);

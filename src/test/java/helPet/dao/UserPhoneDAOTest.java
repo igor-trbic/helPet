@@ -1,8 +1,10 @@
 package helPet.dao;
 
 import helPet.entity.Address;
+import helPet.entity.Phone;
 import helPet.entity.User;
 import helPet.entity.UserAddress;
+import helPet.entity.UserPhone;
 import helPet.entity.util.EntityStatus;
 import helPet.jdbi.BaseTest;
 import org.jdbi.v3.core.Handle;
@@ -12,21 +14,19 @@ import java.util.Date;
 
 import static org.junit.Assert.assertNotNull;
 
-public class UserAddressDAOTest extends BaseTest {
+public class UserPhoneDAOTest extends BaseTest {
     @Test
-    public void testUserAddress() {
+    public void testUserPhone() {
         Handle h = dbi.open();
-        AddressDAO addressDAO = h.attach(AddressDAO.class);
+        PhoneDAO phoneDAO = h.attach(PhoneDAO.class);
         UserDAO userDAO = h.attach(UserDAO.class);
-        UserAddressDAO userAddressDAO = h.attach(UserAddressDAO.class);
+        UserPhoneDAO userPhoneDAO = h.attach(UserPhoneDAO.class);
 
-        Address address = new Address();
-        address.setStreetName(STR_SAMPLE_1);
-        address.setHouseNumber("123");
-        address.setAddressType("PERSONAL");
-        address.setPostalCode(STR_SAMPLE_2);
-        address.setStatus(EntityStatus.ACTIVE);
-        address.setCreatedBy(CREATED_BY);
+        Phone phone = new Phone();
+        phone.setPhoneNumber(STR_SAMPLE_1);
+        phone.setPhoneType(STR_SAMPLE_2);
+        phone.setStatus(EntityStatus.ACTIVE);
+        phone.setCreatedBy(CREATED_BY);
 
         User user = new User();
         user.setUsername(STR_SAMPLE_1);
@@ -41,13 +41,13 @@ public class UserAddressDAOTest extends BaseTest {
         h.begin();
 
         long userId = userDAO.insert(user);
-        long addressId = addressDAO.insert(address);
+        long phoneId = phoneDAO.insert(phone);
 
-        UserAddress userAddress =  new UserAddress();
-        userAddress.setUserId(userId);
-        userAddress.setAddressId(addressId);
+        UserPhone userPhone =  new UserPhone();
+        userPhone.setUserId(userId);
+        userPhone.setPhoneId(phoneId);
 
-        long userAddressId = userAddressDAO.insert(userAddress);
+        long userAddressId = userPhoneDAO.insert(userPhone);
         assertNotNull(userAddressId);
 
         h.rollback();
