@@ -1,7 +1,6 @@
 package helPet.dao;
 
 import helPet.dao.mappers.UserAddressMapper;
-import helPet.entity.User;
 import helPet.entity.UserAddress;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -18,11 +17,11 @@ public interface UserAddressDAO extends Transactional<UserAddressDAO> {
     long insert(@BindBean UserAddress userAddress);
 
     @SqlUpdate("UPDATE public.user_address SET address_id = :addressId, user_id = :userId WHERE id = :id")
-    int update(@BindBean UserAddress user);
+    int update(@BindBean UserAddress userAddress);
 
     @SqlQuery("SELECT * FROM public.user_address WHERE id = :id")
     @UseRowMapper(UserAddressMapper.class)
-    User find(@Bind("id") Long id);
+    UserAddress find(@Bind("id") Long id);
 
     @SqlUpdate("DELETE FROM user_address WHERE id = :id")
     int delete(@Bind("id") Long id);

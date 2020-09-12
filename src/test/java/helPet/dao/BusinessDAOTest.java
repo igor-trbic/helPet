@@ -1,6 +1,7 @@
 package helPet.dao;
 
-import helPet.entity.Email;
+import helPet.entity.Address;
+import helPet.entity.Business;
 import helPet.entity.User;
 import helPet.entity.util.EntityStatus;
 import helPet.jdbi.BaseTest;
@@ -13,12 +14,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class EmailDAOTest extends BaseTest {
+public class BusinessDAOTest extends BaseTest {
     @Test
-    public void testEmail() {
+    public void testBusiness() {
         Handle h = dbi.open();
         UserDAO userDAO = h.attach(UserDAO.class);
-        EmailDAO emailDAO = h.attach(EmailDAO.class);
+        BusinessDAO businessDAO = h.attach(BusinessDAO.class);
 
         User user = new User();
         user.setUsername(STR_SAMPLE_1);
@@ -35,34 +36,34 @@ public class EmailDAOTest extends BaseTest {
         long userId = userDAO.insert(user);
         user.setId(userId);
 
-        Email email = new Email();
-        email.setEmailAddress(STR_SAMPLE_1);
-        email.setEmailType("PERSONAL");
-        email.setIsPrimary(true);
-        email.setUserId(user.getId());
-        email.setStatus(EntityStatus.ACTIVE);
-        email.setCreatedBy(CREATED_BY);
+        Business business = new Business();
+        business.setBusinessOwnerId(user.getId());
+        business.setBusinessName(STR_SAMPLE_1);
+        business.setTaxId(STR_SAMPLE_2);
+        business.setNationalId(STR_SAMPLE_3);
+        business.setStatus(EntityStatus.ACTIVE);
+        business.setCreatedBy(CREATED_BY);
 
         h.begin();
 
-        long id = emailDAO.insert(email);
-        email.setId(id);
+        long id = businessDAO.insert(business);
+        business.setId(id);
 
-        Email found = emailDAO.findActive(email.getId());
+        Business found = businessDAO.findActive(business.getId());
         assertNotNull(found);
-        assertEquals(found.getEmailAddress(), STR_SAMPLE_1);
+        assertEquals(found.getBusinessName(), STR_SAMPLE_1);
 
-        email.setEmailAddress(STR_SAMPLE_3);
-        email.setUpdatedBy(CREATED_BY);
+        business.setBusinessName(STR_SAMPLE_3);
+        business.setUpdatedBy(CREATED_BY);
 
-        int updated = emailDAO.update(email);
+        int updated = businessDAO.update(business);
         assertNotNull(updated);
-        assertEquals(email.getEmailAddress(), STR_SAMPLE_3);
+        assertEquals(business.getBusinessName(), STR_SAMPLE_3);
 
-        int del = emailDAO.remove(email.getId(), CREATED_BY);
+        int del = businessDAO.remove(business.getId(), CREATED_BY);
         assertNotNull(del);
 
-        Email deleted = emailDAO.findActive(email.getId());
+        Business deleted = businessDAO.findActive(business.getId());
         assertNull(deleted);
 
         h.rollback();

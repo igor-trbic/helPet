@@ -1,7 +1,6 @@
 package helPet.dao;
 
 import helPet.dao.mappers.UserPhoneMapper;
-import helPet.entity.User;
 import helPet.entity.UserPhone;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -22,8 +21,8 @@ public interface UserPhoneDAO extends Transactional<UserAddressDAO> {
 
     @SqlQuery("SELECT * FROM public.user_phone WHERE id = :id")
     @UseRowMapper(UserPhoneMapper.class)
-    User find(@Bind("id") Long id);
+    UserPhone find(@Bind("id") Long id);
 
-    @SqlUpdate("DELETE FROM user_address WHERE id = :id")
+    @SqlUpdate("DELETE FROM public.user_phone WHERE id = :id")
     int delete(@Bind("id") Long id);
 }
