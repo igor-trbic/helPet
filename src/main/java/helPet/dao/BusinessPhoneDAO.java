@@ -16,7 +16,7 @@ public interface BusinessPhoneDAO extends Transactional<UserAddressDAO> {
     @GetGeneratedKeys
     long insert(@BindBean BusinessPhone businessPhone);
 
-    @SqlUpdate("UPDATE public.business_phone SET phin = :addressId, business_id = :businessId WHERE id = :id")
+    @SqlUpdate("UPDATE public.business_phone SET phone_id = :phoneId, business_id = :businessId WHERE id = :id")
     int update(@BindBean BusinessPhone businessPhone);
 
     @SqlQuery("SELECT * FROM public.business_phone WHERE id = :id")

@@ -1,7 +1,7 @@
 package helPet.dao;
 
-import helPet.entity.Address;
 import helPet.entity.Business;
+import helPet.entity.BusinessRoleType;
 import helPet.entity.User;
 import helPet.entity.util.EntityStatus;
 import helPet.jdbi.BaseTest;
@@ -14,12 +14,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class BusinessDAOTest extends BaseTest {
+public class BusinessRoleTypeDAOTest extends BaseTest {
     @Test
     public void testBusiness() {
         Handle h = dbi.open();
         UserDAO userDAO = h.attach(UserDAO.class);
         BusinessDAO businessDAO = h.attach(BusinessDAO.class);
+        BusinessRoleTypeDAO businessRoleTypeDAO = h.attach(BusinessRoleTypeDAO.class);
 
         User user = new User();
         user.setUsername(STR_SAMPLE_1);
@@ -47,21 +48,29 @@ public class BusinessDAOTest extends BaseTest {
         long id = businessDAO.insert(business);
         business.setId(id);
 
-        Business found = businessDAO.findActive(business.getId());
+        BusinessRoleType businessRoleType = new BusinessRoleType();
+        businessRoleType.setBusinessRoleName(STR_SAMPLE_1);
+        businessRoleType.setCreatedBy(CREATED_BY);
+        businessRoleType.setStatus(EntityStatus.ACTIVE);
+
+        long businessRoleTypeId = businessRoleTypeDAO.insert(businessRoleType);
+        businessRoleType.setId(businessRoleTypeId);
+
+        BusinessRoleType found = businessRoleTypeDAO.findActive(businessRoleType.getId());
         assertNotNull(found);
-        assertEquals(found.getBusinessName(), STR_SAMPLE_1);
+        assertEquals(found.getBusinessRoleName(), STR_SAMPLE_1);
 
-        business.setBusinessName(STR_SAMPLE_3);
-        business.setUpdatedBy(CREATED_BY);
+        businessRoleType.setBusinessRoleName(STR_SAMPLE_3);
+        businessRoleType.setUpdatedBy(CREATED_BY);
 
-        int updated = businessDAO.update(business);
+        int updated = businessRoleTypeDAO.update(businessRoleType);
         assertNotNull(updated);
-        assertEquals(business.getBusinessName(), STR_SAMPLE_3);
+        assertEquals(businessRoleType.getBusinessRoleName(), STR_SAMPLE_3);
 
-        int del = businessDAO.remove(business.getId(), CREATED_BY);
+        int del = businessRoleTypeDAO.remove(businessRoleType.getId(), CREATED_BY);
         assertNotNull(del);
 
-        Business deleted = businessDAO.findActive(business.getId());
+        BusinessRoleType deleted = businessRoleTypeDAO.findActive(businessRoleType.getId());
         assertNull(deleted);
 
         h.rollback();
