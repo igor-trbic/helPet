@@ -1,7 +1,6 @@
 package helPet.dao;
 
 import helPet.dao.mappers.PhoneMapper;
-import helPet.entity.Address;
 import helPet.entity.Phone;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;

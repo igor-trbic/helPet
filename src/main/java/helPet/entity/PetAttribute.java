@@ -6,6 +6,7 @@ public class PetAttribute extends EntityWithStatus {
     private Long id;
     private String name;
     private String value;
+    private Long petId;
 
     public Long getId() {
         return id;
@@ -29,5 +30,13 @@ public class PetAttribute extends EntityWithStatus {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Long getPetId() {
+        return petId;
+    }
+
+    public void setPetId(Long petId) {
+        this.petId = petId;
     }
 }
