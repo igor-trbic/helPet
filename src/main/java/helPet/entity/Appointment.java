@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Appointment extends EntityWithStatus {
     private Long id;
-    private Date data;
+    private Date date;
     private String note;
     private Long businessId;
     private Long userId;
@@ -20,12 +20,12 @@ public class Appointment extends EntityWithStatus {
         this.id = id;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDate() {
+        return date;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getNote() {

@@ -19,7 +19,7 @@ public class BusinessAddressDAOTest extends BaseTest {
     @Test
     public void testUserPhone() {
         Handle h = dbi.open();
-        AddressDAO phoneDAO = h.attach(AddressDAO.class);
+        AddressDAO addressDAO = h.attach(AddressDAO.class);
         UserDAO userDAO = h.attach(UserDAO.class);
         BusinessDAO businessDAO = h.attach(BusinessDAO.class);
         BusinessAddressDAO businessAddressDAO = h.attach(BusinessAddressDAO.class);
@@ -46,7 +46,7 @@ public class BusinessAddressDAOTest extends BaseTest {
 
         long userId = userDAO.insert(user);
         user.setId(userId);
-        long addressId = phoneDAO.insert(address);
+        long addressId = addressDAO.insert(address);
 
         Business business = new Business();
         business.setBusinessOwnerId(user.getId());

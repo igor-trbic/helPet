@@ -551,6 +551,7 @@ CREATE TABLE public.appointment(
 	id bigint NOT NULL DEFAULT nextval('public.appointment_seq'::regclass),
 	date timestamp NOT NULL,
 	note text,
+	status smallint NOT NULL,
 	created_on timestamp NOT NULL,
 	created_by text NOT NULL,
 	updated_on timestamp,
