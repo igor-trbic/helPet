@@ -1,6 +1,6 @@
 package helPet.dao;
 
-import helPet.dao.mappers.BusniessMapper;
+import helPet.dao.mappers.BusinessMapper;
 import helPet.entity.Business;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -20,7 +20,7 @@ public interface BusinessDAO extends Transactional<AddressDAO> {
     int update(@BindBean Business business);
 
     @SqlQuery("SELECT * FROM public.business WHERE id = :id AND status != 109")
-    @UseRowMapper(BusniessMapper.class)
+    @UseRowMapper(BusinessMapper.class)
     Business findActive(@Bind("id") Long id);
 
     @SqlUpdate("UPDATE public.business SET status = 109, updated_by = :user, updated_on = localtimestamp WHERE id = :id")

@@ -8,7 +8,7 @@ import org.jdbi.v3.core.statement.StatementContext;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BusniessMapper implements RowMapper<Business> {
+public class BusinessMapper implements RowMapper<Business> {
     @Override
     public Business map(ResultSet rs, StatementContext ctx) throws SQLException {
         Business business = new Business();

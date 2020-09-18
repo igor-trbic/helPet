@@ -43,8 +43,6 @@ public class EmailDAOTest extends BaseTest {
         email.setStatus(EntityStatus.ACTIVE);
         email.setCreatedBy(CREATED_BY);
 
-        h.begin();
-
         long id = emailDAO.insert(email);
         email.setId(id);
 
