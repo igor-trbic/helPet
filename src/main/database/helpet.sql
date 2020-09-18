@@ -731,11 +731,16 @@ ALTER SEQUENCE public.therapy_frequency_seq OWNER TO helpet;
 -- DROP TABLE IF EXISTS public.therapy_frequency CASCADE;
 CREATE TABLE public.therapy_frequency(
 	id bigint NOT NULL DEFAULT nextval('public.therapy_frequency_seq'::regclass),
-	"from" timestamp NOT NULL,
-	thru timestamp NOT NULL,
+	from_date timestamp NOT NULL,
+	thru_date timestamp NOT NULL,
 	description text NOT NULL,
 	times smallint NOT NULL,
 	times_per text NOT NULL,
+	created_on timestamp NOT NULL,
+	created_by text NOT NULL,
+	updated_on timestamp,
+	updated_by text,
+	status smallint NOT NULL,
 	therapy_id bigint,
 	CONSTRAINT therapy_frequency_pk PRIMARY KEY (id)
 
@@ -763,10 +768,15 @@ ALTER SEQUENCE public.therapy_medication_seq OWNER TO helpet;
 CREATE TABLE public.therapy_medication(
 	id bigint NOT NULL DEFAULT nextval('public.therapy_medication_seq'::regclass),
 	description text,
-	"from" timestamp NOT NULL,
-	thru timestamp NOT NULL,
+	from_date timestamp NOT NULL,
+	thru_date timestamp NOT NULL,
 	times smallint NOT NULL,
 	times_per text NOT NULL,
+	created_on timestamp NOT NULL,
+	created_by text NOT NULL,
+	updated_on timestamp,
+	updated_by text,
+	status smallint NOT NULL,
 	medication_id bigint,
 	therapy_id bigint,
 	CONSTRAINT therapy_medication_pk PRIMARY KEY (id)

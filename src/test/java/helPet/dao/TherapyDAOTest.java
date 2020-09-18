@@ -34,8 +34,8 @@ public class TherapyDAOTest extends BaseTest {
 
         long deleted = therapyDAO.remove(therapyId, CREATED_BY);
         assertNotNull(deleted);
-        Therapy deletedTerapy = therapyDAO.findActive(therapyId);
-        assertNull(deletedTerapy);
+        Therapy deletedTherapy = therapyDAO.findActive(therapyId);
+        assertNull(deletedTherapy);
 
         h.rollback();
         h.close();

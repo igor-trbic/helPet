@@ -1,11 +1,13 @@
 package helPet.entity;
 
+import helPet.entity.util.EntityWithStatus;
+
 import java.util.Date;
 
-public class TherapyFrequency {
+public class TherapyFrequency extends EntityWithStatus {
     private Long id;
-    private Date from;
-    private Date thru;
+    private Date fromDate;
+    private Date thruDate;
     private String description;
     private Integer times;
     private String timesPer;
@@ -19,20 +21,20 @@ public class TherapyFrequency {
         this.id = id;
     }
 
-    public Date getFrom() {
-        return from;
+    public Date getFromDate() {
+        return fromDate;
     }
 
-    public void setFrom(Date from) {
-        this.from = from;
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public Date getThru() {
-        return thru;
+    public Date getThruDate() {
+        return thruDate;
     }
 
-    public void setThru(Date thru) {
-        this.thru = thru;
+    public void setThruDate(Date thruDate) {
+        this.thruDate = thruDate;
     }
 
     public String getDescription() {
