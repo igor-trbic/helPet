@@ -3,9 +3,8 @@ package helPet.bundles;
 import helPet.HelPetConfiguration;
 import helPet.HelPetService;
 import helPet.dao.common.EntityStatusAsIntArgFactory;
-import helPet.managers.RegistrationManager;
-import helPet.resources.AuthResource;
-import helPet.resources.RegistrationResource;
+import helPet.managers.SampleManager;
+import helPet.resources.SampleResource;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.db.DatabaseConfiguration;
@@ -68,8 +67,8 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
 
     private void registerResources(Environment environment) {
         final Set<Object> resources = new HashSet<>();
-        resources.add(new AuthResource());
-        resources.add(new RegistrationResource(HelPetService.getRegistrationManager()));
+        // TODO: Add your resources
+        resources.add(new SampleResource(HelPetService.getRegistrationManager()));
 
         for(Object r : resources){
             environment.jersey().register(r);
@@ -85,8 +84,8 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
         HelPetService.setDbi(dbi);
 
 //        HelPetService.setAuthManager(new AuthManager(dbi));
-        HelPetService.setRegistrationManager(new RegistrationManager(dbi));
-//        environment.jersey().getResourceConfig().register(new AbstractBinder() {
+        HelPetService.setRegistrationManager(new SampleManager(dbi));
+//        environment.jersey().getResourceConfig().sampleMe(new AbstractBinder() {
 //            @Override
 //            protected void configure() {
 //                bind(AuthManager.class).to(AuthManager.class).in(Immediate.class);

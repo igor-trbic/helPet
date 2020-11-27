@@ -32,17 +32,10 @@ public class HelPetApplication extends Application<HelPetConfiguration> {
     public void run(final HelPetConfiguration configuration,
                     final Environment environment) {
         // TODO: implement application
-//        final HelloWorldResource resource = new HelloWorldResource(
-//                configuration.getTemplate(),
-//                configuration.getDefaultName()
-//        );
         final TemplateHealthCheck healthCheck =
                 new TemplateHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
-//        environment.jersey().register(resource);
         final JdbiFactory factory = new JdbiFactory();
-//        final Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
-//        environment.jersey().register(new UserResource(jdbi));
     }
 
 }

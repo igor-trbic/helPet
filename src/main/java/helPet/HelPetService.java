@@ -1,7 +1,6 @@
 package helPet;
 
-import helPet.managers.AuthManager;
-import helPet.managers.RegistrationManager;
+import helPet.managers.SampleManager;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Environment;
 import org.jdbi.v3.core.Jdbi;
@@ -18,8 +17,7 @@ public enum HelPetService {
     private Environment environment;
     private Configuration configuration;
     private Jdbi dbi;
-    private AuthManager authManager;
-    private RegistrationManager registrationManager;
+    private SampleManager sampleManager;
 
     public static Environment getEnvironment() {
         return INSTANCE.environment;
@@ -45,28 +43,11 @@ public enum HelPetService {
         INSTANCE.dbi = dbi;
     }
 
-//    public static AuthManager getUserFormsManager() {
-//        return INSTANCE.authManager;
-//    }
-//
-//    public static void setUserFormsManager(AuthManager authManager) {
-//        INSTANCE.authManager = authManager;
-//    }
-
-
-    public static AuthManager getAuthManager() {
-        return INSTANCE.authManager;
+    public static SampleManager getRegistrationManager() {
+        return INSTANCE.sampleManager;
     }
 
-    public static void setAuthManager(AuthManager authManager) {
-        INSTANCE.authManager = authManager;
-    }
-
-    public static RegistrationManager getRegistrationManager() {
-        return INSTANCE.registrationManager;
-    }
-
-    public static void setRegistrationManager(RegistrationManager registrationManager) {
-        INSTANCE.registrationManager = registrationManager;
+    public static void setRegistrationManager(SampleManager sampleManager) {
+        INSTANCE.sampleManager = sampleManager;
     }
 }
