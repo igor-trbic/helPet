@@ -1,16 +1,15 @@
 -- Database generated with pgModeler (PostgreSQL Database Modeler).
--- pgModeler  version: 0.9.1-beta
--- PostgreSQL version: 9.6
--- Project Site: pgmodeler.com.br
+-- pgModeler  version: 0.9.2
+-- PostgreSQL version: 12.0
+-- Project Site: pgmodeler.io
 -- Model Author: ---
 
 
--- Database creation must be done outside an multicommand file.
--- These commands were put in this file only for convenience.
+-- Database creation must be done outside a multicommand file.
+-- These commands were put in this file only as a convenience.
 -- -- object: helpet | type: DATABASE --
 -- -- DROP DATABASE IF EXISTS helpet;
--- CREATE DATABASE helpet
--- ;
+-- CREATE DATABASE helpet;
 -- -- ddl-end --
 -- 
 
@@ -25,12 +24,12 @@ CREATE SEQUENCE public.users_sequence
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.users_sequence OWNER TO helpet;
+-- ALTER SEQUENCE public.users_sequence OWNER TO postgres;
 -- ddl-end --
 
 -- object: public."user" | type: TABLE --
 -- DROP TABLE IF EXISTS public."user" CASCADE;
-CREATE TABLE public."user"(
+CREATE TABLE public."user" (
 	id bigint NOT NULL DEFAULT nextval('public.users_sequence'::regclass),
 	username text NOT NULL,
 	password text NOT NULL,
@@ -47,7 +46,7 @@ CREATE TABLE public."user"(
 
 );
 -- ddl-end --
-ALTER TABLE public."user" OWNER TO helpet;
+-- ALTER TABLE public."user" OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.phone_sequence | type: SEQUENCE --
@@ -61,12 +60,12 @@ CREATE SEQUENCE public.phone_sequence
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.phone_sequence OWNER TO helpet;
+-- ALTER SEQUENCE public.phone_sequence OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.phone | type: TABLE --
 -- DROP TABLE IF EXISTS public.phone CASCADE;
-CREATE TABLE public.phone(
+CREATE TABLE public.phone (
 	id smallint NOT NULL DEFAULT nextval('public.phone_sequence'::regclass),
 	phone_number text NOT NULL,
 	phone_type text NOT NULL,
@@ -80,7 +79,7 @@ CREATE TABLE public.phone(
 
 );
 -- ddl-end --
-ALTER TABLE public.phone OWNER TO helpet;
+-- ALTER TABLE public.phone OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.user_phone_seq | type: SEQUENCE --
@@ -94,7 +93,7 @@ CREATE SEQUENCE public.user_phone_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.user_phone_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.user_phone_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.user_address_seq | type: SEQUENCE --
@@ -108,7 +107,7 @@ CREATE SEQUENCE public.user_address_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.user_address_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.user_address_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.address_seq | type: SEQUENCE --
@@ -122,12 +121,12 @@ CREATE SEQUENCE public.address_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.address_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.address_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.address | type: TABLE --
 -- DROP TABLE IF EXISTS public.address CASCADE;
-CREATE TABLE public.address(
+CREATE TABLE public.address (
 	id bigint NOT NULL DEFAULT nextval('public.address_seq'::regclass),
 	street_name text NOT NULL,
 	house_number text,
@@ -142,7 +141,7 @@ CREATE TABLE public.address(
 
 );
 -- ddl-end --
-ALTER TABLE public.address OWNER TO helpet;
+-- ALTER TABLE public.address OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.email_seq | type: SEQUENCE --
@@ -156,12 +155,12 @@ CREATE SEQUENCE public.email_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.email_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.email_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.email | type: TABLE --
 -- DROP TABLE IF EXISTS public.email CASCADE;
-CREATE TABLE public.email(
+CREATE TABLE public.email (
 	id bigint NOT NULL DEFAULT nextval('public.email_seq'::regclass),
 	email_address text NOT NULL,
 	is_primary boolean NOT NULL,
@@ -177,7 +176,7 @@ CREATE TABLE public.email(
 
 );
 -- ddl-end --
-ALTER TABLE public.email OWNER TO helpet;
+-- ALTER TABLE public.email OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_seq | type: SEQUENCE --
@@ -191,12 +190,12 @@ CREATE SEQUENCE public.business_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.business_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business | type: TABLE --
 -- DROP TABLE IF EXISTS public.business CASCADE;
-CREATE TABLE public.business(
+CREATE TABLE public.business (
 	id bigint NOT NULL DEFAULT nextval('public.business_seq'::regclass),
 	business_name text NOT NULL,
 	business_owner_id bigint NOT NULL,
@@ -212,11 +211,11 @@ CREATE TABLE public.business(
 
 );
 -- ddl-end --
-COMMENT ON COLUMN public.business.tax_id IS 'PIB';
+COMMENT ON COLUMN public.business.tax_id IS E'PIB';
 -- ddl-end --
-COMMENT ON COLUMN public.business.national_id IS 'MB';
+COMMENT ON COLUMN public.business.national_id IS E'MB';
 -- ddl-end --
-ALTER TABLE public.business OWNER TO helpet;
+-- ALTER TABLE public.business OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_role_seq | type: SEQUENCE --
@@ -230,12 +229,12 @@ CREATE SEQUENCE public.business_role_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_role_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.business_role_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_role | type: TABLE --
 -- DROP TABLE IF EXISTS public.business_role CASCADE;
-CREATE TABLE public.business_role(
+CREATE TABLE public.business_role (
 	id bigint NOT NULL DEFAULT nextval('public.business_role_seq'::regclass),
 	status smallint NOT NULL,
 	created_on timestamp NOT NULL,
@@ -248,7 +247,7 @@ CREATE TABLE public.business_role(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_role OWNER TO helpet;
+-- ALTER TABLE public.business_role OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_role_type_seq | type: SEQUENCE --
@@ -262,12 +261,12 @@ CREATE SEQUENCE public.business_role_type_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_role_type_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.business_role_type_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_role_type | type: TABLE --
 -- DROP TABLE IF EXISTS public.business_role_type CASCADE;
-CREATE TABLE public.business_role_type(
+CREATE TABLE public.business_role_type (
 	id bigint NOT NULL DEFAULT nextval('public.business_role_type_seq'::regclass),
 	business_role_name text NOT NULL,
 	status smallint NOT NULL,
@@ -280,7 +279,7 @@ CREATE TABLE public.business_role_type(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_role_type OWNER TO helpet;
+-- ALTER TABLE public.business_role_type OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_staff_seq | type: SEQUENCE --
@@ -294,12 +293,12 @@ CREATE SEQUENCE public.business_staff_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_staff_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.business_staff_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_staff | type: TABLE --
 -- DROP TABLE IF EXISTS public.business_staff CASCADE;
-CREATE TABLE public.business_staff(
+CREATE TABLE public.business_staff (
 	id bigint NOT NULL DEFAULT nextval('public.business_staff_seq'::regclass),
 	user_id bigint,
 	business_id bigint,
@@ -307,12 +306,12 @@ CREATE TABLE public.business_staff(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_staff OWNER TO helpet;
+-- ALTER TABLE public.business_staff OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.user_address | type: TABLE --
 -- DROP TABLE IF EXISTS public.user_address CASCADE;
-CREATE TABLE public.user_address(
+CREATE TABLE public.user_address (
 	id bigint NOT NULL DEFAULT nextval('public.user_address_seq'::regclass),
 	address_id bigint,
 	user_id bigint,
@@ -320,7 +319,7 @@ CREATE TABLE public.user_address(
 
 );
 -- ddl-end --
-ALTER TABLE public.user_address OWNER TO helpet;
+-- ALTER TABLE public.user_address OWNER TO postgres;
 -- ddl-end --
 
 -- object: user_fk | type: CONSTRAINT --
@@ -332,7 +331,7 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- object: public.user_phone | type: TABLE --
 -- DROP TABLE IF EXISTS public.user_phone CASCADE;
-CREATE TABLE public.user_phone(
+CREATE TABLE public.user_phone (
 	id bigint NOT NULL DEFAULT nextval('public.user_phone_seq'::regclass),
 	user_id bigint,
 	phone_id smallint,
@@ -340,7 +339,7 @@ CREATE TABLE public.user_phone(
 
 );
 -- ddl-end --
-ALTER TABLE public.user_phone OWNER TO helpet;
+-- ALTER TABLE public.user_phone OWNER TO postgres;
 -- ddl-end --
 
 -- object: phone_fk | type: CONSTRAINT --
@@ -423,12 +422,12 @@ CREATE SEQUENCE public.pet_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.pet_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.pet_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.pet | type: TABLE --
 -- DROP TABLE IF EXISTS public.pet CASCADE;
-CREATE TABLE public.pet(
+CREATE TABLE public.pet (
 	id bigint NOT NULL DEFAULT nextval('public.pet_seq'::regclass),
 	name text NOT NULL,
 	date_of_birth timestamp NOT NULL,
@@ -442,7 +441,7 @@ CREATE TABLE public.pet(
 
 );
 -- ddl-end --
-ALTER TABLE public.pet OWNER TO helpet;
+-- ALTER TABLE public.pet OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.pet_owner_seq | type: SEQUENCE --
@@ -456,12 +455,12 @@ CREATE SEQUENCE public.pet_owner_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.pet_owner_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.pet_owner_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.pet_owner | type: TABLE --
 -- DROP TABLE IF EXISTS public.pet_owner CASCADE;
-CREATE TABLE public.pet_owner(
+CREATE TABLE public.pet_owner (
 	id bigint NOT NULL DEFAULT nextval('public.pet_owner_seq'::regclass),
 	user_id bigint,
 	pet_id bigint,
@@ -469,7 +468,7 @@ CREATE TABLE public.pet_owner(
 
 );
 -- ddl-end --
-ALTER TABLE public.pet_owner OWNER TO helpet;
+-- ALTER TABLE public.pet_owner OWNER TO postgres;
 -- ddl-end --
 
 -- object: user_fk | type: CONSTRAINT --
@@ -502,12 +501,12 @@ CREATE SEQUENCE public.pet_attribute_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.pet_attribute_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.pet_attribute_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.pet_attribute | type: TABLE --
 -- DROP TABLE IF EXISTS public.pet_attribute CASCADE;
-CREATE TABLE public.pet_attribute(
+CREATE TABLE public.pet_attribute (
 	id bigint NOT NULL DEFAULT nextval('public.pet_attribute_seq'::regclass),
 	name text NOT NULL,
 	value text,
@@ -521,7 +520,7 @@ CREATE TABLE public.pet_attribute(
 
 );
 -- ddl-end --
-ALTER TABLE public.pet_attribute OWNER TO helpet;
+-- ALTER TABLE public.pet_attribute OWNER TO postgres;
 -- ddl-end --
 
 -- object: pet_fk | type: CONSTRAINT --
@@ -542,12 +541,12 @@ CREATE SEQUENCE public.appointment_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.appointment_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.appointment_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.appointment | type: TABLE --
 -- DROP TABLE IF EXISTS public.appointment CASCADE;
-CREATE TABLE public.appointment(
+CREATE TABLE public.appointment (
 	id bigint NOT NULL DEFAULT nextval('public.appointment_seq'::regclass),
 	date timestamp NOT NULL,
 	note text,
@@ -563,7 +562,7 @@ CREATE TABLE public.appointment(
 
 );
 -- ddl-end --
-ALTER TABLE public.appointment OWNER TO helpet;
+-- ALTER TABLE public.appointment OWNER TO postgres;
 -- ddl-end --
 
 -- object: business_fk | type: CONSTRAINT --
@@ -603,12 +602,12 @@ CREATE SEQUENCE public.therapy_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.therapy_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.therapy_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.therapy | type: TABLE --
 -- DROP TABLE IF EXISTS public.therapy CASCADE;
-CREATE TABLE public.therapy(
+CREATE TABLE public.therapy (
 	id bigint NOT NULL DEFAULT nextval('public.therapy_seq'::regclass),
 	status smallint NOT NULL,
 	created_on timestamp NOT NULL,
@@ -619,7 +618,7 @@ CREATE TABLE public.therapy(
 
 );
 -- ddl-end --
-ALTER TABLE public.therapy OWNER TO helpet;
+-- ALTER TABLE public.therapy OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.examination_seq | type: SEQUENCE --
@@ -633,12 +632,12 @@ CREATE SEQUENCE public.examination_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.examination_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.examination_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.examination | type: TABLE --
 -- DROP TABLE IF EXISTS public.examination CASCADE;
-CREATE TABLE public.examination(
+CREATE TABLE public.examination (
 	id bigint NOT NULL DEFAULT nextval('public.examination_seq'::regclass),
 	note text NOT NULL,
 	appointment_id bigint,
@@ -648,7 +647,7 @@ CREATE TABLE public.examination(
 
 );
 -- ddl-end --
-ALTER TABLE public.examination OWNER TO helpet;
+-- ALTER TABLE public.examination OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.diagnose_seq | type: SEQUENCE --
@@ -662,12 +661,12 @@ CREATE SEQUENCE public.diagnose_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.diagnose_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.diagnose_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.diagnose | type: TABLE --
 -- DROP TABLE IF EXISTS public.diagnose CASCADE;
-CREATE TABLE public.diagnose(
+CREATE TABLE public.diagnose (
 	id bigint NOT NULL DEFAULT nextval('public.diagnose_seq'::regclass),
 	name text NOT NULL,
 	description text NOT NULL,
@@ -676,7 +675,7 @@ CREATE TABLE public.diagnose(
 
 );
 -- ddl-end --
-ALTER TABLE public.diagnose OWNER TO helpet;
+-- ALTER TABLE public.diagnose OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.medication_seq | type: SEQUENCE --
@@ -690,12 +689,12 @@ CREATE SEQUENCE public.medication_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.medication_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.medication_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.medication | type: TABLE --
 -- DROP TABLE IF EXISTS public.medication CASCADE;
-CREATE TABLE public.medication(
+CREATE TABLE public.medication (
 	id bigint NOT NULL DEFAULT nextval('public.medication_seq'::regclass),
 	name text NOT NULL,
 	description text NOT NULL,
@@ -710,7 +709,7 @@ CREATE TABLE public.medication(
 
 );
 -- ddl-end --
-ALTER TABLE public.medication OWNER TO helpet;
+-- ALTER TABLE public.medication OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.therapy_frequency_seq | type: SEQUENCE --
@@ -724,12 +723,12 @@ CREATE SEQUENCE public.therapy_frequency_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.therapy_frequency_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.therapy_frequency_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.therapy_frequency | type: TABLE --
 -- DROP TABLE IF EXISTS public.therapy_frequency CASCADE;
-CREATE TABLE public.therapy_frequency(
+CREATE TABLE public.therapy_frequency (
 	id bigint NOT NULL DEFAULT nextval('public.therapy_frequency_seq'::regclass),
 	from_date timestamp NOT NULL,
 	thru_date timestamp NOT NULL,
@@ -746,7 +745,7 @@ CREATE TABLE public.therapy_frequency(
 
 );
 -- ddl-end --
-ALTER TABLE public.therapy_frequency OWNER TO helpet;
+-- ALTER TABLE public.therapy_frequency OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.therapy_medication_seq | type: SEQUENCE --
@@ -760,12 +759,12 @@ CREATE SEQUENCE public.therapy_medication_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.therapy_medication_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.therapy_medication_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.therapy_medication | type: TABLE --
 -- DROP TABLE IF EXISTS public.therapy_medication CASCADE;
-CREATE TABLE public.therapy_medication(
+CREATE TABLE public.therapy_medication (
 	id bigint NOT NULL DEFAULT nextval('public.therapy_medication_seq'::regclass),
 	description text,
 	from_date timestamp NOT NULL,
@@ -783,7 +782,7 @@ CREATE TABLE public.therapy_medication(
 
 );
 -- ddl-end --
-ALTER TABLE public.therapy_medication OWNER TO helpet;
+-- ALTER TABLE public.therapy_medication OWNER TO postgres;
 -- ddl-end --
 
 -- object: appointment_fk | type: CONSTRAINT --
@@ -854,12 +853,12 @@ CREATE SEQUENCE public.business_address_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_address_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.business_address_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_address | type: TABLE --
 -- DROP TABLE IF EXISTS public.business_address CASCADE;
-CREATE TABLE public.business_address(
+CREATE TABLE public.business_address (
 	id bigint NOT NULL DEFAULT nextval('public.business_address_seq'::regclass),
 	business_id bigint,
 	address_id bigint,
@@ -867,7 +866,7 @@ CREATE TABLE public.business_address(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_address OWNER TO helpet;
+-- ALTER TABLE public.business_address OWNER TO postgres;
 -- ddl-end --
 
 -- object: business_fk | type: CONSTRAINT --
@@ -900,12 +899,12 @@ CREATE SEQUENCE public.business_phone_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.business_phone_seq OWNER TO helpet;
+-- ALTER SEQUENCE public.business_phone_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.business_phone | type: TABLE --
 -- DROP TABLE IF EXISTS public.business_phone CASCADE;
-CREATE TABLE public.business_phone(
+CREATE TABLE public.business_phone (
 	id bigint NOT NULL DEFAULT nextval('public.business_phone_seq'::regclass),
 	business_id bigint,
 	phone_id smallint,
@@ -913,7 +912,7 @@ CREATE TABLE public.business_phone(
 
 );
 -- ddl-end --
-ALTER TABLE public.business_phone OWNER TO helpet;
+-- ALTER TABLE public.business_phone OWNER TO postgres;
 -- ddl-end --
 
 -- object: business_fk | type: CONSTRAINT --
@@ -952,6 +951,32 @@ ALTER TABLE public.user_address ADD CONSTRAINT user_address_uq UNIQUE (address_i
 ALTER TABLE public.user_phone ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
 REFERENCES public."user" (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: public.user_auth_token | type: TABLE --
+-- DROP TABLE IF EXISTS public.user_auth_token CASCADE;
+CREATE TABLE public.user_auth_token (
+	token text NOT NULL,
+	created_on timestamp NOT NULL,
+	expiry_time timestamp NOT NULL,
+	user_id bigint,
+	CONSTRAINT user_auth_token_pk PRIMARY KEY (token)
+
+);
+-- ddl-end --
+-- ALTER TABLE public.user_auth_token OWNER TO postgres;
+-- ddl-end --
+
+-- object: user_fk | type: CONSTRAINT --
+-- ALTER TABLE public.user_auth_token DROP CONSTRAINT IF EXISTS user_fk CASCADE;
+ALTER TABLE public.user_auth_token ADD CONSTRAINT user_fk FOREIGN KEY (user_id)
+REFERENCES public."user" (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: user_auth_token_uq | type: CONSTRAINT --
+-- ALTER TABLE public.user_auth_token DROP CONSTRAINT IF EXISTS user_auth_token_uq CASCADE;
+ALTER TABLE public.user_auth_token ADD CONSTRAINT user_auth_token_uq UNIQUE (user_id);
 -- ddl-end --
 
 

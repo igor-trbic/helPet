@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class helPetConfiguration extends Configuration {
+public class HelPetConfiguration extends Configuration {
     @NotEmpty
     private String template;
 

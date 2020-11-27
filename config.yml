@@ -34,7 +34,7 @@ server:
     - type: https
       port: 9090
       keyStorePath: keystore.jks
-      keyStorePassword: password
+      keyStorePassword: H3lP3t
       validateCerts: false
       validatePeers: false
   adminConnectors:

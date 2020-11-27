@@ -1,5 +1,6 @@
 package helPet;
 
+import helPet.bundles.ComponentBundle;
 import helPet.health.TemplateHealthCheck;
 //import helPet.resources.HelloWorldResource;
 import io.dropwizard.Application;
@@ -8,10 +9,12 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.jdbi.v3.core.Jdbi;
 
-public class helPetApplication extends Application<helPetConfiguration> {
+public class HelPetApplication extends Application<HelPetConfiguration> {
+
+    private HelPetConfiguration helPetConfiguration = new HelPetConfiguration();
 
     public static void main(final String[] args) throws Exception {
-        new helPetApplication().run(args);
+        new HelPetApplication().run(args);
     }
 
     @Override
@@ -20,13 +23,13 @@ public class helPetApplication extends Application<helPetConfiguration> {
     }
 
     @Override
-    public void initialize(final Bootstrap<helPetConfiguration> bootstrap) {
+    public void initialize(final Bootstrap<HelPetConfiguration> bootstrap) {
         // TODO: application initialization
-
+        bootstrap.addBundle(new ComponentBundle(helPetConfiguration));
     }
 
     @Override
-    public void run(final helPetConfiguration configuration,
+    public void run(final HelPetConfiguration configuration,
                     final Environment environment) {
         // TODO: implement application
 //        final HelloWorldResource resource = new HelloWorldResource(
@@ -38,7 +41,7 @@ public class helPetApplication extends Application<helPetConfiguration> {
         environment.healthChecks().register("template", healthCheck);
 //        environment.jersey().register(resource);
         final JdbiFactory factory = new JdbiFactory();
-        final Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
+//        final Jdbi jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
 //        environment.jersey().register(new UserResource(jdbi));
     }
 
