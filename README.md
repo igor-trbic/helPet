@@ -23,3 +23,9 @@ Health Check
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
 
+
+
+How to start frontend
+---
+
+Just run `npm start` inside frontend application directory which is `path-to-your-application/src/main/resources/assets/helPet`
