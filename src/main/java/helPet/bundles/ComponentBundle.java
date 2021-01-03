@@ -4,6 +4,7 @@ import helPet.HelPetConfiguration;
 import helPet.HelPetService;
 import helPet.dao.common.EntityStatusAsIntArgFactory;
 import helPet.managers.RegistrationManager;
+import helPet.managers.HelPetSecurityManager;
 import helPet.resources.AuthResource;
 import helPet.resources.RegistrationResource;
 import io.dropwizard.ConfiguredBundle;
@@ -86,6 +87,7 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
 
 //        HelPetService.setAuthManager(new AuthManager(dbi));
         HelPetService.setRegistrationManager(new RegistrationManager(dbi));
+        HelPetService.setSecurityManager(new HelPetSecurityManager(dbi));
 //        environment.jersey().getResourceConfig().register(new AbstractBinder() {
 //            @Override
 //            protected void configure() {

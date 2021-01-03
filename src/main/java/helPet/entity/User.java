@@ -2,9 +2,11 @@ package helPet.entity;
 
 import helPet.entity.util.EntityWithStatus;
 
+import java.io.Serializable;
+import java.security.Principal;
 import java.util.Date;
 
-public class User extends EntityWithStatus {
+public class User extends EntityWithStatus implements Principal, Serializable {
     private Long id;
     private String username;
     private String password;
@@ -58,5 +60,10 @@ public class User extends EntityWithStatus {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    @Override
+    public String getName() {
+        return username;
     }
 }

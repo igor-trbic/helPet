@@ -1,5 +1,6 @@
 package helPet.resources;
 
+import helPet.entity.Medication;
 import helPet.entity.User;
 
 import javax.ws.rs.POST;
@@ -9,18 +10,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/auth")
+@Path("/medications")
 @Produces(MediaType.APPLICATION_JSON)
-public class AuthResource {
-
+public class MedicationResource<Path> {
     @POST
-    public Response register(@QueryParam("lang") String lang,
-                             User user) {
+    public Response createMedication(User user,
+                                     Medication medication) {
         return Response.ok("HELLO!").build();
-    }
-
-    @POST
-    public Response login(User user) {
-        return Response.ok().build();
     }
 }
