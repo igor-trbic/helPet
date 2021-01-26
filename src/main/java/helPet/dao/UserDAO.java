@@ -29,4 +29,8 @@ public interface UserDAO extends Transactional<UserDAO> {
     @SqlQuery("SELECT * FROM public.user WHERE username = :username AND password = :password AND status != 109")
     @UseRowMapper(UserMapper.class)
     User findByUsernameAndPassword(@Bind("username") String username,@Bind("password") String password);
+
+    @SqlQuery("SELECT * FROM public.user WHERE id = :id AND status != 109")
+    @UseRowMapper(UserMapper.class)
+    User findById(@Bind("id") Long id);
 }

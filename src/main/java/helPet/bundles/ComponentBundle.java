@@ -2,12 +2,20 @@ package helPet.bundles;
 
 import helPet.HelPetConfiguration;
 import helPet.HelPetService;
+import helPet.auth.AuthMeFactoryProvider;
+import helPet.auth.HelPetAuthenticator;
 import helPet.dao.common.EntityStatusAsIntArgFactory;
+import helPet.entity.User;
+import helPet.hk2.ImmediateFeature;
+import helPet.managers.AuthManager;
+import helPet.managers.PetManager;
 import helPet.managers.RegistrationManager;
 import helPet.managers.HelPetSecurityManager;
 import helPet.resources.AuthResource;
+import helPet.resources.PetResource;
 import helPet.resources.RegistrationResource;
 import io.dropwizard.ConfiguredBundle;
+import io.dropwizard.auth.Authenticator;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.db.DatabaseConfiguration;
 import io.dropwizard.jdbi3.JdbiFactory;
@@ -15,6 +23,8 @@ import io.dropwizard.server.DefaultServerFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.glassfish.hk2.api.Immediate;
+import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.guava.GuavaPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
@@ -69,7 +79,8 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
 
     private void registerResources(Environment environment) {
         final Set<Object> resources = new HashSet<>();
-        resources.add(new AuthResource());
+        resources.add(new AuthResource(HelPetService.getAuthManager(), HelPetService.getHelPetSecurityManager()));
+        resources.add(new PetResource(HelPetService.getPetManager()));
         resources.add(new RegistrationResource(HelPetService.getRegistrationManager()));
 
         for(Object r : resources){
@@ -85,28 +96,30 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
         HelPetService.setConfiguration(configuration);
         HelPetService.setDbi(dbi);
 
-//        HelPetService.setAuthManager(new AuthManager(dbi));
+        HelPetService.setHelPetSecurityManager(new HelPetSecurityManager(dbi));
+        HelPetService.setAuthManager(new AuthManager(dbi, HelPetService.getHelPetSecurityManager()));
         HelPetService.setRegistrationManager(new RegistrationManager(dbi));
-        HelPetService.setSecurityManager(new HelPetSecurityManager(dbi));
-//        environment.jersey().getResourceConfig().register(new AbstractBinder() {
-//            @Override
-//            protected void configure() {
-//                bind(AuthManager.class).to(AuthManager.class).in(Immediate.class);
-//            }
-//        });
+        HelPetService.setPetManager(new PetManager(dbi));
+
+        environment.jersey().getResourceConfig().register(ImmediateFeature.class);
+        environment.jersey().getResourceConfig().register(new AbstractBinder() {
+
+            @Override
+            protected void configure() {
+                bind(HelPetAuthenticator.class).to(Authenticator.class).in(Immediate.class);
+            }
+        });
+        environment.jersey().getResourceConfig().register(new AuthMeFactoryProvider.Binder<>(User.class));
     }
 
     private void configureCors(T configuration, Environment environment) {
-        final FilterRegistration.Dynamic cors =
-                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
-        // Configure CORS parameters
-        cors.setInitParameter("allowedOrigins", "*");
-        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
-        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
-        cors.setInitParameter("accessControlAllowOrigin", "/*");
-        // Add URL mapping
-        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-
+        FilterRegistration.Dynamic filter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+        filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,PUT,POST,DELETE,OPTIONS");
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
+        filter.setInitParameter("accessControlAllowOrigin", "/*");
+        filter.setInitParameter("allowedHeaders", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
+        filter.setInitParameter("Access-Control-Allow-Credentials", "true");
     }
 
 

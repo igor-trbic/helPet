@@ -1,6 +1,7 @@
 package helPet;
 
 import helPet.managers.AuthManager;
+import helPet.managers.PetManager;
 import helPet.managers.RegistrationManager;
 import helPet.managers.HelPetSecurityManager;
 import io.dropwizard.Configuration;
@@ -21,7 +22,8 @@ public enum HelPetService {
     private Jdbi dbi;
     private AuthManager authManager;
     private RegistrationManager registrationManager;
-    private HelPetSecurityManager securityManager;
+    private HelPetSecurityManager helPetSecurityManager;
+    private PetManager petManager;
 
     public static Environment getEnvironment() {
         return INSTANCE.environment;
@@ -47,15 +49,6 @@ public enum HelPetService {
         INSTANCE.dbi = dbi;
     }
 
-//    public static AuthManager getUserFormsManager() {
-//        return INSTANCE.authManager;
-//    }
-//
-//    public static void setUserFormsManager(AuthManager authManager) {
-//        INSTANCE.authManager = authManager;
-//    }
-
-
     public static AuthManager getAuthManager() {
         return INSTANCE.authManager;
     }
@@ -72,11 +65,19 @@ public enum HelPetService {
         INSTANCE.registrationManager = registrationManager;
     }
 
-    public static HelPetSecurityManager getSecurityManager() {
-        return INSTANCE.securityManager;
+    public static HelPetSecurityManager getHelPetSecurityManager() {
+        return INSTANCE.helPetSecurityManager;
     }
 
-    public static void setSecurityManager(HelPetSecurityManager securityManager) {
-        INSTANCE.securityManager = securityManager;
+    public static void setHelPetSecurityManager(HelPetSecurityManager securityManager) {
+        INSTANCE.helPetSecurityManager = securityManager;
+    }
+
+    public static PetManager getPetManager() {
+        return INSTANCE.petManager;
+    }
+
+    public static void setPetManager(PetManager petManager) {
+        INSTANCE.petManager = petManager;
     }
 }

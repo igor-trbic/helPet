@@ -15,6 +15,7 @@ public class UserAuthTokenMapper implements RowMapper<UserAuthToken> {
         userAuthToken.setToken(rs.getString("token"));
         userAuthToken.setCreatedOn(rs.getTimestamp("created_on"));
         userAuthToken.setExpiryTime(rs.getTimestamp("expiry_time"));
+        userAuthToken.setUserId(rs.getLong("user_id"));
 
         return userAuthToken;
     }

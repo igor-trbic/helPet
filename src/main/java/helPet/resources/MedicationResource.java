@@ -12,7 +12,8 @@ import javax.ws.rs.core.Response;
 
 @Path("/medications")
 @Produces(MediaType.APPLICATION_JSON)
-public class MedicationResource<Path> {
+public class MedicationResource {
+
     @POST
     public Response createMedication(User user,
                                      Medication medication) {

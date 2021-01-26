@@ -9,15 +9,19 @@ import io.dropwizard.auth.basic.BasicCredentials;
 
 import java.util.Optional;
 
-public class HelPetAuthenticator implements Authenticator <BasicCredentials, User> {
+public class HelPetAuthenticator implements Authenticator<HelPetCredencials, User> {
 
     @Override
-    public Optional<User> authenticate(BasicCredentials credentials) throws AuthenticationException {
+    public Optional<User> authenticate(HelPetCredencials credentials) throws AuthenticationException {
 
-        HelPetSecurityManager securityManager = HelPetService.getSecurityManager();
+        HelPetSecurityManager securityManager = HelPetService.getHelPetSecurityManager();
 
-        if ("secret".equals(credentials.getPassword())) {
-//            return Optional.of(new User(credentials.getUsername()));
+        if (credentials.getToken() != null) {
+            User user = securityManager.getUserByToken(credentials.getToken());
+            if (user == null) {
+                return Optional.empty();
+            }
+            return Optional.of(user);
         }
         return Optional.empty();
     }
