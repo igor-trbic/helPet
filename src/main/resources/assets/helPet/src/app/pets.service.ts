@@ -25,4 +25,25 @@ export class PetsService {
       tap((req: Pet[]) => console.log(`req w/ id=${req}`))
     );
   }
+
+  createPet(pet: Pet): Observable<Pet> {
+    return this.http.post(this.registerUrl, pet, this.httpOptions)
+    .pipe(
+      tap((req: Pet) => console.log(`req w/ id=${req}`))
+    );
+  }
+
+  updatePet(pet: Pet): Observable<Pet> {
+    return this.http.put(this.registerUrl + '/' + pet.id, pet, this.httpOptions)
+    .pipe(
+      tap((req: Pet) => console.log(`req w/ id=${req}`))
+    );
+  }
+
+  removePet(petId: number): Observable<Pet> {
+    return this.http.delete(this.registerUrl + '/' + petId, this.httpOptions)
+    .pipe(
+      tap((req: Pet) => console.log(`req w/ id=${req}`))
+    );
+  }
 }

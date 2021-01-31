@@ -9,22 +9,28 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PetsComponent } from './pets/pets.component';
 import { AuthInterceptor } from './http-interceptors/auth-interceptor';
+import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './components/modal/modal.component';
+import { NgbDateCustomParserFormatter } from './utils/datepicker.formatter';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    PetsComponent
+    PetsComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter},
   ],
   bootstrap: [AppComponent]
 })

@@ -1,3 +1,78 @@
-<button class="btn btn-primary" (click)="getPets()">
-    GET ME SOME PETS
-</button>
+<div class="row">
+    <div class="col-md-8">
+        <h1 class="h3 mb-2 text-gray-800">Your pets</h1>
+        <p>You can view, create, edit or remove pets from here</p>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary float-right" (click)="createPet()">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Note</th>
+            <th scope="col" style="text-align: right;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pet of pets">
+            <td>{{pet.id}}</td>
+            <td>{{pet.name}}</td>
+            <td>{{pet.dateOfBirth}}</td>
+            <td class="text-truncate">{{pet.note}}</td>
+            <td class=" float-right">
+                <button class="btn btn-primary" (click)="updatePet(pet)">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-danger ml-2" (click)="removePet(pet.id)">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<modal #modal [modalConfig]="modalConfig">
+    <form class="user" #petForm="ngForm">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label for="dateOfBirth">Name</label>
+                <input type="text"
+                    class="form-control form-control-user"
+                    id="name"
+                    placeholder="Name"
+                    required
+                    [(ngModel)]="pet.name" name="name"
+                    #name="ngModel">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label for="dateOfBirth">Date Of Birth</label>
+                <input class="form-control form-control-user"
+                       placeholder="yyyy-MM-dd"
+                       id="dateOfBirth"
+                       required
+                       [(ngModel)]="pet.dateOfBirth" name="dateOfBirth"
+                       #dateOfBirth="ngModel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="dateOfBirth">Note</label>
+            <textarea type="email"
+                  class="form-control form-control-user"
+                  id="note"
+                  placeholder="Note"
+                  required
+                  [(ngModel)]="pet.note" name="note"
+                  #note="ngModel">
+          </textarea>
+        </div>
+      </form>
+</modal>

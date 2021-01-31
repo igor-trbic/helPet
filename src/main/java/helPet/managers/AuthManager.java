@@ -39,6 +39,7 @@ public class AuthManager {
             return user;
 
         } catch (Exception ex) {
+            LOG.error(ex.getMessage());
             h.rollback();
         } finally {
             h.commit();
@@ -71,6 +72,7 @@ public class AuthManager {
 
             h.commit();
         } catch (Exception ex) {
+            LOG.error(ex.getMessage());
             h.rollback();
         } finally {
             h.close();

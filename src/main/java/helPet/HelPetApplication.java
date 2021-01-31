@@ -7,6 +7,8 @@ import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import java.text.SimpleDateFormat;
+
 public class HelPetApplication extends Application<HelPetConfiguration> {
 
     private HelPetConfiguration helPetConfiguration = new HelPetConfiguration();
@@ -24,6 +26,7 @@ public class HelPetApplication extends Application<HelPetConfiguration> {
     public void initialize(final Bootstrap<HelPetConfiguration> bootstrap) {
         // TODO: application initialization
         bootstrap.addBundle(new ComponentBundle(helPetConfiguration));
+        bootstrap.getObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
     }
 
     @Override

@@ -32,6 +32,7 @@ public class HelPetSecurityManager {
                     .hashString(sb.toString(), StandardCharsets.UTF_8)
                     .toString();
         } catch (Exception e) {
+            LOG.error(e.getMessage());
             LOG.error("Cannot create TOKEN!");
         }
         return hashed;
@@ -55,6 +56,7 @@ public class HelPetSecurityManager {
             h.commit();
 
         } catch (Exception ex) {
+            LOG.error(ex.getMessage());
             h.rollback();
         } finally {
             h.close();
@@ -83,6 +85,7 @@ public class HelPetSecurityManager {
             }
 
         } catch (Exception ex) {
+            LOG.error(ex.getMessage());
             h.rollback();
         } finally {
             h.commit();

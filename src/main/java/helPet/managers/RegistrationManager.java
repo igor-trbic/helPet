@@ -65,6 +65,7 @@ public class RegistrationManager {
             h.commit();
 
         } catch (Exception ex) {
+            LOG.error(ex.getMessage());
             h.rollback();
             success = false;
         } finally {
@@ -97,6 +98,7 @@ public class RegistrationManager {
             h.commit();
 
         } catch (Exception ex) {
+            LOG.error(ex.getMessage());
             h.rollback();
             success = false;
         } finally {
