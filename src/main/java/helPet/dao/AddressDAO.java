@@ -10,6 +10,8 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.statement.UseRowMapper;
 import org.jdbi.v3.sqlobject.transaction.Transactional;
 
+import java.util.List;
+
 public interface AddressDAO extends Transactional<AddressDAO> {
     @SqlUpdate("INSERT INTO public.address (id, street_name, house_number, postal_code, address_type, status, created_on, created_by, updated_on, updated_by " +
                " ) VALUES ( nextval('address_seq'), :streetName, :houseNumber, :postalCode, :addressType, :status, localtimestamp, :createdBy, null, null)")
@@ -25,4 +27,8 @@ public interface AddressDAO extends Transactional<AddressDAO> {
 
     @SqlUpdate("UPDATE public.address SET status = 109, updated_by = :user, updated_on = localtimestamp WHERE id = :id")
     int remove(@Bind("id") Long id, @Bind("user") String user);
+
+    @SqlQuery("SELECT * FROM public.address a JOIN public.user_address ua ON (ua.address_id = a.id) WHERE ua.user_id = :userId AND status != 109")
+    @UseRowMapper(AddressMapper.class)
+    List<Address> findByUserId(@Bind("userId") Long userId);
 }

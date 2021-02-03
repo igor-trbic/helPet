@@ -3,3 +3,11 @@ body {
   color: black;
   font-weight: 400;
 }
+
+.navbar-nav a, span {
+  cursor: pointer;
+}
+
+.navbar-nav a:hover {
+  background: #4066d6;
+}

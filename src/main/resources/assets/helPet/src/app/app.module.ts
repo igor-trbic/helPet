@@ -12,6 +12,11 @@ import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbDateCustomParserFormatter } from './utils/datepicker.formatter';
+import { ProfileComponent } from './profile/profile.component';
+import { AppointmantsComponent } from './appointmants/appointmants.component';
+import { PhonesComponent } from './components/phones/phones.component';
+import { EmailsComponent } from './components/emails/emails.component';
+import { AddressesComponent } from './components/addresses/addresses.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +24,12 @@ import { NgbDateCustomParserFormatter } from './utils/datepicker.formatter';
     LoginComponent,
     RegisterComponent,
     PetsComponent,
-    ModalComponent
+    ModalComponent,
+    ProfileComponent,
+    AppointmantsComponent,
+    PhonesComponent,
+    EmailsComponent,
+    AddressesComponent
   ],
   imports: [
     BrowserModule,

@@ -7,12 +7,18 @@ import helPet.auth.HelPetAuthenticator;
 import helPet.dao.common.EntityStatusAsIntArgFactory;
 import helPet.entity.User;
 import helPet.hk2.ImmediateFeature;
+import helPet.managers.AddressManager;
 import helPet.managers.AuthManager;
+import helPet.managers.EmailManager;
 import helPet.managers.PetManager;
+import helPet.managers.PhoneManager;
 import helPet.managers.RegistrationManager;
 import helPet.managers.HelPetSecurityManager;
+import helPet.resources.AddressResource;
 import helPet.resources.AuthResource;
+import helPet.resources.EmailResource;
 import helPet.resources.PetResource;
+import helPet.resources.PhoneResource;
 import helPet.resources.RegistrationResource;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.auth.Authenticator;
@@ -80,8 +86,11 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
     private void registerResources(Environment environment) {
         final Set<Object> resources = new HashSet<>();
         resources.add(new AuthResource(HelPetService.getAuthManager(), HelPetService.getHelPetSecurityManager()));
-        resources.add(new PetResource(HelPetService.getPetManager()));
         resources.add(new RegistrationResource(HelPetService.getRegistrationManager()));
+        resources.add(new PetResource(HelPetService.getPetManager()));
+        resources.add(new AddressResource(HelPetService.getAddressManager()));
+        resources.add(new PhoneResource(HelPetService.getPhoneManager()));
+        resources.add(new EmailResource(HelPetService.getEmailManager()));
 
         for(Object r : resources){
             environment.jersey().register(r);
@@ -100,6 +109,9 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
         HelPetService.setAuthManager(new AuthManager(dbi, HelPetService.getHelPetSecurityManager()));
         HelPetService.setRegistrationManager(new RegistrationManager(dbi));
         HelPetService.setPetManager(new PetManager(dbi));
+        HelPetService.setPhoneManager(new PhoneManager(dbi));
+        HelPetService.setAddressManager(new AddressManager(dbi));
+        HelPetService.setEmailManager(new EmailManager(dbi));
 
         environment.jersey().getResourceConfig().register(ImmediateFeature.class);
         environment.jersey().getResourceConfig().register(new AbstractBinder() {

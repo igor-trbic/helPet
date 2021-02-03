@@ -30,9 +30,9 @@ public class PetResource {
             if (pets != null) {
                 return Response.ok(pets).build();
             }
-            return Response.ok("Nope, no pets").build();
+            return Response.ok("Cannot retrieve pets").build();
         } catch (Exception ex) {
-            return Response.ok("Nope, no pets").build();
+            return Response.ok("Cannot retrieve pets").build();
         }
     }
 
@@ -42,11 +42,11 @@ public class PetResource {
         try {
             Pet newPet = petManager.createPet(pet, user);
             if (newPet != null) {
-                return Response.ok("HERE'S SOME PETS!!").build();
+                return Response.ok(newPet).build();
             }
-            return Response.ok("Nope, no pets").build();
+            return Response.ok("Cannot create pet").build();
         } catch (Exception ex) {
-            return Response.ok("Nope, no pets").build();
+            return Response.ok("Cannot create pet").build();
         }
     }
 
@@ -59,11 +59,11 @@ public class PetResource {
         try {
             Pet updatePet = petManager.updatePet(pet, user);
             if (updatePet != null) {
-                return Response.ok("HERE'S SOME PETS!!").build();
+                return Response.ok(updatePet).build();
             }
-            return Response.ok("Nope, no pets").build();
+            return Response.ok("Cannot update pet").build();
         } catch (Exception ex) {
-            return Response.ok("Nope, no pets").build();
+            return Response.ok("Cannot update pet").build();
         }
     }
 

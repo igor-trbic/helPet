@@ -1,0 +1,84 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <div class="row">
+      <div class="col-md-10">
+        <h6 class="m-auto font-weight-bold text-primary">Emails</h6>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary float-right" (click)="createEmail()">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Email Address</th>
+              <th scope="col">Email Type</th>
+              <th scope="col">Primary</th>
+              <th scope="col" style="text-align: right;">Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let email of emails">
+              <td>{{email.id}}</td>
+              <td>{{email.emailAddress}}</td>
+              <td>{{email.emailType}}</td>
+              <td>{{email.isPrimary}}</td>
+              <td class=" float-right">
+                  <button class="btn btn-primary" (click)="updateEmail(email)">
+                      <i class="fa fa-edit"></i>
+                  </button>
+                  <button class="btn btn-danger ml-2" (click)="removeEmail(email.id)">
+                      <i class="fa fa-trash"></i>
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<modal #modal [modalConfig]="modalConfig">
+  <form class="user" #emailForm="ngForm">
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <label for="emailAddress">Email Address</label>
+              <input type="text"
+                  class="form-control form-control-user"
+                  id="emailAddress"
+                  placeholder="Email Address"
+                  required
+                  [(ngModel)]="email.emailAddress" name="emailAddress"
+                  #emailAddress="ngModel">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <label for="dateOfBirth">Email Type</label>
+              <input type="text"
+                  class="form-control form-control-user"
+                  id="emailType"
+                  placeholder="Email Type"
+                  required
+                  [(ngModel)]="email.emailType" name="emailType"
+                  #emailType="ngModel">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-sm-12">
+            <label class="form-check-label">
+              Primary
+              <input type="checkbox"
+                     [(ngModel)]="email.isPrimary"
+                     name="isPrimary"
+                     #dateOfBirth="ngModel">
+           </label>
+             
+          </div>
+      </div>
+    </form>
+</modal>

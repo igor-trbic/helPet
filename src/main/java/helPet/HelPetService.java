@@ -1,7 +1,10 @@
 package helPet;
 
+import helPet.managers.AddressManager;
 import helPet.managers.AuthManager;
+import helPet.managers.EmailManager;
 import helPet.managers.PetManager;
+import helPet.managers.PhoneManager;
 import helPet.managers.RegistrationManager;
 import helPet.managers.HelPetSecurityManager;
 import io.dropwizard.Configuration;
@@ -24,6 +27,9 @@ public enum HelPetService {
     private RegistrationManager registrationManager;
     private HelPetSecurityManager helPetSecurityManager;
     private PetManager petManager;
+    private PhoneManager phoneManager;
+    private AddressManager addressManager;
+    private EmailManager emailManager;
 
     public static Environment getEnvironment() {
         return INSTANCE.environment;
@@ -79,5 +85,29 @@ public enum HelPetService {
 
     public static void setPetManager(PetManager petManager) {
         INSTANCE.petManager = petManager;
+    }
+
+    public static PhoneManager getPhoneManager() {
+        return INSTANCE.phoneManager;
+    }
+
+    public static void setPhoneManager(PhoneManager phoneManager) {
+        INSTANCE.phoneManager = phoneManager;
+    }
+
+    public static AddressManager getAddressManager() {
+        return INSTANCE.addressManager;
+    }
+
+    public static void setAddressManager(AddressManager addressManager) {
+        INSTANCE.addressManager = addressManager;
+    }
+
+    public static EmailManager getEmailManager() {
+        return INSTANCE.emailManager;
+    }
+
+    public static void setEmailManager(EmailManager emailManager) {
+        INSTANCE.emailManager = emailManager;
     }
 }

@@ -9,7 +9,7 @@ import { Pet } from './models/pet.model';
 })
 export class PetsService {
 
-  private registerUrl = '/helpet/pets';  // URL to web api
+  private apiUrl = '/helpet/pets';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json',
@@ -20,28 +20,28 @@ export class PetsService {
     private http: HttpClient) { }
 
   getPets(): Observable<Pet[]> {
-    return this.http.get(this.registerUrl, this.httpOptions)
+    return this.http.get(this.apiUrl, this.httpOptions)
     .pipe(
       tap((req: Pet[]) => console.log(`req w/ id=${req}`))
     );
   }
 
   createPet(pet: Pet): Observable<Pet> {
-    return this.http.post(this.registerUrl, pet, this.httpOptions)
+    return this.http.post(this.apiUrl, pet, this.httpOptions)
     .pipe(
       tap((req: Pet) => console.log(`req w/ id=${req}`))
     );
   }
 
   updatePet(pet: Pet): Observable<Pet> {
-    return this.http.put(this.registerUrl + '/' + pet.id, pet, this.httpOptions)
+    return this.http.put(this.apiUrl + '/' + pet.id, pet, this.httpOptions)
     .pipe(
       tap((req: Pet) => console.log(`req w/ id=${req}`))
     );
   }
 
   removePet(petId: number): Observable<Pet> {
-    return this.http.delete(this.registerUrl + '/' + petId, this.httpOptions)
+    return this.http.delete(this.apiUrl + '/' + petId, this.httpOptions)
     .pipe(
       tap((req: Pet) => console.log(`req w/ id=${req}`))
     );

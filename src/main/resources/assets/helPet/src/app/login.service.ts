@@ -10,7 +10,7 @@ import { User } from './models/user.model';
 })
 export class LoginService {
 
-  private registerUrl = '/helpet/auth';  // URL to web api
+  private apiUrl = '/helpet/auth';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export class LoginService {
     private http: HttpClient) { }
 
   login(authReq: AuthReq): Observable<AuthReq> {
-    return this.http.post<AuthReq>(this.registerUrl, authReq, this.httpOptions).pipe(
+    return this.http.post<AuthReq>(this.apiUrl, authReq, this.httpOptions).pipe(
       tap((req: AuthReq) => console.log(`req w/ id=${req}`))
     );
   }

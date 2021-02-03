@@ -7,7 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 @Injectable()
 export class RegisterService {
 
-  private registerUrl = '/helpet/register';  // URL to web api
+  private apiUrl = '/helpet/register';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export class RegisterService {
     private http: HttpClient) { }
 
   register(user: User): Observable<User> {
-    return this.http.post<User>(this.registerUrl, user, this.httpOptions).pipe(
+    return this.http.post<User>(this.apiUrl, user, this.httpOptions).pipe(
       tap((newUser: User) => console.log(`added hero w/ id=${newUser.username}`))
     );
   }

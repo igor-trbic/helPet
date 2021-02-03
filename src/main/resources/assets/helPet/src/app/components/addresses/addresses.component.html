@@ -1,0 +1,98 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <div class="row">
+      <div class="col-md-10">
+        <h6 class="m-auto font-weight-bold text-primary">Addresses</h6>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary float-right" (click)="createAddress()">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Street Name</th>
+              <th scope="col">House Number</th>
+              <th scope="col">Postal Code</th>
+              <th scope="col">Address Type</th>
+              <th scope="col" style="text-align: right;">Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let address of addresses">
+              <td>{{address.id}}</td>
+              <td>{{address.streetName}}</td>
+              <td>{{address.houseNumber}}</td>
+              <td>{{address.postalCode}}</td>
+              <td>{{address.addressType}}</td>
+              <td class=" float-right">
+                  <button class="btn btn-primary" (click)="updateAddress(phone)">
+                      <i class="fa fa-edit"></i>
+                  </button>
+                  <button class="btn btn-danger ml-2" (click)="removeAddress(address.id)">
+                      <i class="fa fa-trash"></i>
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<modal #modal [modalConfig]="modalConfig">
+  <form class="user" #emailForm="ngForm">
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <label for="streetName">Street Name</label>
+              <input type="text"
+                  class="form-control form-control-user"
+                  id="streetName"
+                  placeholder="Street Name"
+                  required
+                  [(ngModel)]="address.streetName" name="streetName"
+                  #streetName="ngModel">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <label for="postalCode">Postal Code</label>
+              <input type="text"
+                  class="form-control form-control-user"
+                  id="postalCode"
+                  placeholder="Postal Code"
+                  required
+                  [(ngModel)]="address.postalCode" name="postalCode"
+                  #postalCode="ngModel">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <label for="houseNumber">House Number</label>
+              <input type="text"
+                  class="form-control form-control-user"
+                  id="houseNumber"
+                  placeholder="House Number"
+                  required
+                  [(ngModel)]="address.houseNumber" name="houseNumber"
+                  #houseNumber="ngModel">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <label for="addressType">Address Type</label>
+              <input type="text"
+                  class="form-control form-control-user"
+                  id="addressType"
+                  placeholder="Address Type"
+                  required
+                  [(ngModel)]="address.addressType" name="addressType"
+                  #addressType="ngModel">
+          </div>
+      </div>
+    </form>
+</modal>
