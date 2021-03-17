@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
 
   title = 'helPet';
   user = null;
+  business = null;
   localSStorage = localStorage;
 
   logout() {
@@ -25,5 +26,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.user = localStorage.getItem('username');
+    this.business = localStorage.getItem('businessName');
   }
 }

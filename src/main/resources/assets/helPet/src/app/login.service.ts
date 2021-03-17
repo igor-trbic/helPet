@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthReq } from './models/authReq.model';
+import { UserDTO } from './models/user.dto.model';
 import { User } from './models/user.model';
 
 @Injectable({
@@ -20,9 +21,9 @@ export class LoginService {
   constructor(
     private http: HttpClient) { }
 
-  login(authReq: AuthReq): Observable<AuthReq> {
-    return this.http.post<AuthReq>(this.apiUrl, authReq, this.httpOptions).pipe(
-      tap((req: AuthReq) => console.log(`req w/ id=${req}`))
+  login(authReq: UserDTO): Observable<UserDTO> {
+    return this.http.post<UserDTO>(this.apiUrl, authReq, this.httpOptions).pipe(
+      tap((req: UserDTO) => console.log(`req w/ id=${req}`))
     );
   }
 }

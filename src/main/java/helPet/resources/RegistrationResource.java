@@ -1,5 +1,6 @@
 package helPet.resources;
 
+import helPet.dto.BusinessRegisterDTO;
 import helPet.entity.User;
 import helPet.managers.RegistrationManager;
 
@@ -22,6 +23,17 @@ public class RegistrationResource {
     public Response register(User user) {
         try {
             registrationManager.register(user);
+            return Response.ok("Successful registration!").build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+    }
+
+    @POST
+    @Path("/business")
+    public Response registerBusiness(BusinessRegisterDTO businessRegisterDTO) {
+        try {
+            registrationManager.registerBusiness(businessRegisterDTO);
             return Response.ok("Successful registration!").build();
         } catch (Exception ex) {
             return Response.serverError().build();

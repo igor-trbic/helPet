@@ -22,6 +22,7 @@ public class UserMapper implements RowMapper<User> {
         user.setCreatedOn(rs.getDate("created_on"));
         user.setUpdatedBy(rs.getString("updated_by"));
         user.setUpdatedOn(rs.getDate("updated_on"));
+        user.setPassword(rs.getString("password"));
         user.setStatus(EntityStatus.get(rs.getInt("status")));
 
         return user;

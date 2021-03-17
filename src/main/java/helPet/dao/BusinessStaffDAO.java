@@ -25,4 +25,8 @@ public interface BusinessStaffDAO extends Transactional<UserAddressDAO> {
 
     @SqlUpdate("DELETE FROM business_staff WHERE id = :id")
     int delete(@Bind("id") Long id);
+
+    @SqlQuery("SELECT * FROM public.business_staff WHERE user_id = :userId")
+    @UseRowMapper(BusinessStaffMapper.class)
+    BusinessStaff findByUserId(@Bind("userId") Long userId);
 }

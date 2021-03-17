@@ -10,7 +10,20 @@
             <div class="text-center">
               <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
             </div>
-            <form class="user" (ngSubmit)="register(user)" #heroForm="ngForm">
+            <div class="row">
+              <div class="col-md-6 p-0">
+                <button class="btn btn-primary btn-user btn-block" (click)="shownForm = 'user'">
+                  User
+                </button>
+              </div>
+              <div class="col-md-6 p-0">
+                <button class="btn btn-primary btn-user btn-block" (click)="shownForm = 'business'">
+                  Business
+                </button>
+              </div>
+            </div>
+            <hr>
+            <form class="user" (ngSubmit)="registerUser(user)" #userForm="ngForm" *ngIf="shownForm === 'user'">
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                   <input type="text"
@@ -59,7 +72,88 @@
                 </div>
               </div>
               <button type="submit" class="btn btn-primary btn-user btn-block">
-                Register Account
+                Register User
+              </button>
+            </form>
+            <form class="user" (ngSubmit)="registerBusiness(businessUser)" #businessForm="ngForm" *ngIf="shownForm === 'business'">
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text"
+                         class="form-control form-control-user"
+                         id="firstName"
+                         placeholder="First Name"
+                         required
+                         [(ngModel)]="businessUser.user.firstName" name="firstName"
+                         #firstName="ngModel">
+                </div>
+                <div class="col-sm-6">
+                  <input type="text"
+                          class="form-control form-control-user"
+                          id="lastName"
+                          placeholder="Last Name"
+                          required
+                          [(ngModel)]="businessUser.user.lastName" name="lastName"
+                          #lastName="ngModel">
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="email"
+                        class="form-control form-control-user"
+                        id="username"
+                        placeholder="Email Address"
+                        required
+                        [(ngModel)]="businessUser.user.username" name="username"
+                        #username="ngModel">
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="password"
+                          class="form-control form-control-user"
+                          id="password"
+                          placeholder="Password"
+                          required
+                          [(ngModel)]="businessUser.user.password" name="password"
+                          #password="ngModel">
+                </div>
+                <div class="col-sm-6">
+                  <input type="password"
+                          class="form-control form-control-user"
+                          id="repeatPassword"
+                          placeholder="Repeat Password"
+                          >
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="text"
+                        class="form-control form-control-user"
+                        id="businessName"
+                        placeholder="Business Name"
+                        required
+                        [(ngModel)]="businessUser.business.businessName" name="businessName"
+                        #businessName="ngModel">
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text"
+                          class="form-control form-control-user"
+                          id="taxId"
+                          placeholder="Tax ID"
+                          required
+                          [(ngModel)]="businessUser.business.taxId" name="taxId"
+                          #taxId="ngModel">
+                </div>
+                <div class="col-sm-6">
+                  <input type="text"
+                          class="form-control form-control-user"
+                          id="nationalId"
+                          placeholder="National ID"
+                          required
+                          [(ngModel)]="businessUser.business.nationalId" name="nationalId"
+                          #nationalId="ngModel">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-user btn-block">
+                Register Business
               </button>
             </form>
             <hr>

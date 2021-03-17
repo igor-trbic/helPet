@@ -1,8 +1,13 @@
 package helPet.managers;
 
+import helPet.dao.BusinessDAO;
+import helPet.dao.BusinessStaffDAO;
 import helPet.dao.UserAuthTokenDAO;
 import helPet.dao.UserDAO;
+import helPet.dto.UserDTO;
 import helPet.entity.AuthReq;
+import helPet.entity.Business;
+import helPet.entity.BusinessStaff;
 import helPet.entity.User;
 import helPet.entity.UserAuthToken;
 import org.apache.commons.lang3.time.DateUtils;
@@ -24,19 +29,41 @@ public class AuthManager {
         this.helPetSecurityManager = helPetSecurityManager;
     }
 
-    public User vaidate(AuthReq authReq) {
-        User user = null;
+    public UserDTO validate(UserDTO userDTO) {
+        UserDTO authUser = new UserDTO();
         Handle h = dbi.open();
         try {
             h.begin();
             UserDAO userDAO = h.attach(UserDAO.class);
+            BusinessDAO businessDAO = h.attach(BusinessDAO.class);
+            BusinessStaffDAO businessStaffDAO = h.attach(BusinessStaffDAO.class);
 
-            user = userDAO.findByUsernameAndPassword(authReq.getUsername(), authReq.getPassword());
+            User user =  new User();
+            user = userDAO.findByUsernameAndPassword(userDTO.getUsername(), userDTO.getPassword());
 
             if (user == null) {
                 System.out.println("NO USER FOUND, OH NO!");
             }
-            return user;
+            authUser.setDateOfBirth(user.getDateOfBirth());
+            authUser.setFirstName(user.getFirstName());
+            authUser.setLastName(user.getLastName());
+            authUser.setUsername(user.getUsername());
+            authUser.setId(user.getId());
+            authUser.setCreatedBy(user.getCreatedBy());
+            authUser.setCreatedOn(user.getCreatedOn());
+            authUser.setStatus(user.getStatus());
+
+            // Check if user works in some of the businesses
+            BusinessStaff businessStaff = businessStaffDAO.findByUserId(user.getId());
+            if (businessStaff != null) {
+                Business business = businessDAO.findActive(businessStaff.getBusinessId());
+                if (business != null) {
+                    authUser.setBusinessId(business.getId());
+                    authUser.setBusinessName(business.getBusinessName());
+                }
+            }
+
+            return authUser;
 
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
@@ -45,10 +72,10 @@ public class AuthManager {
             h.commit();
             h.close();
         }
-        return user;
+        return authUser;
     }
 
-    public String generateToken(User user) {
+    public String generateToken(UserDTO user) {
         Handle h = dbi.open();
         String token = "";
         try {

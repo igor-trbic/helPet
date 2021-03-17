@@ -107,7 +107,7 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
 
         HelPetService.setHelPetSecurityManager(new HelPetSecurityManager(dbi));
         HelPetService.setAuthManager(new AuthManager(dbi, HelPetService.getHelPetSecurityManager()));
-        HelPetService.setRegistrationManager(new RegistrationManager(dbi));
+        HelPetService.setRegistrationManager(new RegistrationManager(dbi, HelPetService.getHelPetSecurityManager()));
         HelPetService.setPetManager(new PetManager(dbi));
         HelPetService.setPhoneManager(new PhoneManager(dbi));
         HelPetService.setAddressManager(new AddressManager(dbi));

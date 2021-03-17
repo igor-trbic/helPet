@@ -14,11 +14,11 @@ public class EmailSender {
 
     // TODO: Extract from config
     private static final String USERNAME = "helpetoffice@gmail.com";
-    private static final String PASSWORD = "NgeV4R896qM7yji";
+    private static final String PASSWORD = "kpgnatgopegboyfq";
 
     public void sendMail(String to,
                          String subject,
-                         String content) {
+                         String content) throws Exception {
         Properties prop = System.getProperties();
         prop.put("mail.smtp.port", "465");
         prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -55,6 +55,7 @@ public class EmailSender {
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            throw new Exception("Cannot send email: " + e.getMessage());
         }
     }
 
