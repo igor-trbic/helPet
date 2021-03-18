@@ -22,6 +22,21 @@
         <i class="fas fa-fw fa-table"></i>
         <span>Appointmants</span></a>
     </li>
+    <li class="nav-item" *ngIf="business">
+      <a class="nav-link" routerLink="/staff" routerLinkActive="active">
+        <i class="fas fa-fw fa-users"></i>
+        <span>Staff</span></a>
+    </li>
+    <li class="nav-item" *ngIf="business">
+      <a class="nav-link" routerLink="/medications" routerLinkActive="active">
+        <i class="fas fa-fw fa-pills"></i>
+        <span>Medication</span></a>
+    </li>
+    <li class="nav-item" *ngIf="business">
+      <a class="nav-link" routerLink="/diagnoses" routerLinkActive="active">
+        <i class="fas fa-fw fa-book"></i>
+        <span>Diagnose</span></a>
+    </li>
     <li class="nav-item">
       <a class="nav-link" (click)="logout()">
         <i class="fas fa-fw fa-sign-out-alt"></i>

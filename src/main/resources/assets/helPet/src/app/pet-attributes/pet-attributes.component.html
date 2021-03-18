@@ -1,0 +1,70 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <div class="row">
+      <div class="col-md-10">
+        <h6 class="m-auto font-weight-bold text-primary">Attributes</h6>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary float-right" (click)="createAttribute()">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Value</th>
+              <th scope="col" style="text-align: right;">Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let attr of attributes">
+              <td>{{attr.id}}</td>
+              <td>{{attr.name}}</td>
+              <td>{{attr.value}}</td>
+              <td class=" float-right">
+                  <button class="btn btn-primary" (click)="updateAttribute(attr)">
+                      <i class="fa fa-edit"></i>
+                  </button>
+                  <button class="btn btn-danger ml-2" (click)="removeAttribute(attr.id)">
+                      <i class="fa fa-trash"></i>
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<modal #modal [modalConfig]="modalConfig">
+  <form class="user" #emailForm="ngForm">
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <label for="name">Attribute name</label>
+              <input type="text"
+                  class="form-control form-control-user"
+                  id="name"
+                  placeholder="Attribute Name"
+                  required
+                  [(ngModel)]="attribute.name" name="name"
+                  #name="ngModel">
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-sm-12">
+              <label for="value">Attribute Value</label>
+              <input type="text"
+                  class="form-control form-control-user"
+                  id="value"
+                  placeholder="Attribute Value"
+                  required
+                  [(ngModel)]="attribute.value" name="value"
+                  #value="ngModel">
+          </div>
+      </div>
+    </form>
+</modal>

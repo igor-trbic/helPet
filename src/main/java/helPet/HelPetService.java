@@ -3,6 +3,7 @@ package helPet;
 import helPet.managers.AddressManager;
 import helPet.managers.AuthManager;
 import helPet.managers.EmailManager;
+import helPet.managers.PetAttributeManager;
 import helPet.managers.PetManager;
 import helPet.managers.PhoneManager;
 import helPet.managers.RegistrationManager;
@@ -27,6 +28,7 @@ public enum HelPetService {
     private RegistrationManager registrationManager;
     private HelPetSecurityManager helPetSecurityManager;
     private PetManager petManager;
+    private PetAttributeManager petAttributeManager;
     private PhoneManager phoneManager;
     private AddressManager addressManager;
     private EmailManager emailManager;
@@ -109,5 +111,13 @@ public enum HelPetService {
 
     public static void setEmailManager(EmailManager emailManager) {
         INSTANCE.emailManager = emailManager;
+    }
+
+    public static PetAttributeManager getPetAttributeManager() {
+        return INSTANCE.petAttributeManager;
+    }
+
+    public static void setPetAttributeManager(PetAttributeManager petAttributeManager) {
+        INSTANCE.petAttributeManager = petAttributeManager;
     }
 }

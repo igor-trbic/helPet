@@ -27,7 +27,10 @@
             <td>{{pet.dateOfBirth}}</td>
             <td class="text-truncate">{{pet.note}}</td>
             <td class=" float-right">
-                <button class="btn btn-primary" (click)="updatePet(pet)">
+                <button class="btn btn-primary" routerLink="/pet/{{pet.id}}" routerLinkActive="active">
+                    <i class="fa fa-eye"></i>
+                </button>
+                <button class="btn btn-primary ml-2" (click)="updatePet(pet)">
                     <i class="fa fa-edit"></i>
                 </button>
                 <button class="btn btn-danger ml-2" (click)="removePet(pet.id)">

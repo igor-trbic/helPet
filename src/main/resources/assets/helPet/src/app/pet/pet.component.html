@@ -1,0 +1,29 @@
+<div *ngIf="pet">
+  <div class="row">
+    <div class="col-md-8">
+        <h1 class="h3 mb-2 text-gray-800">{{pet.name}}'s page</h1>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary float-right" (click)="editPet()">
+            <i class="fa fa-edit"></i>
+        </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+        <p>Date of Birth</p>
+    </div>
+    <div class="col-md-11">
+        <p>{{pet.dateOfBirth}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+        <p>Note</p>
+    </div>
+    <div class="col-md-11">
+        <p>{{pet.note}}</p>
+    </div>
+  </div>
+</div>
+<pet-attributes></pet-attributes>

@@ -26,9 +26,15 @@ public interface PetDAO extends Transactional<PetDAO> {
     Pet findActive(@Bind("id") Long id);
 
     @SqlUpdate("UPDATE public.pet SET status = 109, updated_by = :user, updated_on = localtimestamp WHERE id = :id")
-    int remove(@Bind("id") Long id, @Bind("user") String user);
+    int remove(@Bind("id") Long id,
+               @Bind("user") String user);
 
     @SqlQuery("SELECT * FROM public.pet p JOIN public.pet_owner po ON (po.pet_id = p.id) WHERE po.user_id = :userId AND p.status != 109")
     @UseRowMapper(PetMapper.class)
     List<Pet> findByUserId(@Bind("userId") Long userId);
+
+    @SqlQuery("SELECT * FROM public.pet p JOIN public.pet_owner po ON (po.pet_id = p.id) WHERE po.user_id = :userId AND p.id = :petId AND p.status != 109")
+    @UseRowMapper(PetMapper.class)
+    Pet findByUserIdAndPetId(@Bind("userId") Long userId,
+                             @Bind("petId") Long petId);
 }

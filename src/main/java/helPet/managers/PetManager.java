@@ -127,4 +127,28 @@ public class PetManager {
         }
         return success;
     }
+
+    public Pet getPet(User user, Long id) throws Exception {
+        Handle h = dbi.open();
+        Pet pet = new Pet();
+        try {
+            h.begin();
+            PetDAO petDAO = h.attach(PetDAO.class);
+
+            pet = petDAO.findByUserIdAndPetId(user.getId(), id);
+            if (pet == null) {
+                // TODO: implement client error
+                throw new Exception("Cannot retrieve pet");
+            }
+
+            h.commit();
+        } catch (Exception ex) {
+            pet = null;
+            LOG.error(ex.getMessage());
+            h.rollback();
+        } finally {
+            h.close();
+        }
+        return pet;
+    }
 }

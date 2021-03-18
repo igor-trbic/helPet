@@ -17,6 +17,11 @@ import { AppointmantsComponent } from './appointmants/appointmants.component';
 import { PhonesComponent } from './components/phones/phones.component';
 import { EmailsComponent } from './components/emails/emails.component';
 import { AddressesComponent } from './components/addresses/addresses.component';
+import { StaffComponent } from './staff/staff.component';
+import { MedicationsComponent } from './medications/medications.component';
+import { DiagnosesComponent } from './diagnoses/diagnoses.component';
+import { PetComponent } from './pet/pet.component';
+import { PetAttributesComponent } from './pet-attributes/pet-attributes.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,12 @@ import { AddressesComponent } from './components/addresses/addresses.component';
     AppointmantsComponent,
     PhonesComponent,
     EmailsComponent,
-    AddressesComponent
+    AddressesComponent,
+    StaffComponent,
+    MedicationsComponent,
+    DiagnosesComponent,
+    PetComponent,
+    PetAttributesComponent
   ],
   imports: [
     BrowserModule,

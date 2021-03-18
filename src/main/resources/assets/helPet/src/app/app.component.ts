@@ -20,6 +20,8 @@ export class AppComponent implements OnInit {
 
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('businessId');
+    localStorage.removeItem('businessName');
 
     this.router.navigate(['/login']);
   }

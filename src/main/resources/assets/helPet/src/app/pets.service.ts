@@ -26,6 +26,13 @@ export class PetsService {
     );
   }
 
+  getPet(id): Observable<Pet> {
+    return this.http.get(this.apiUrl + '/' + id, this.httpOptions)
+    .pipe(
+      tap((req: Pet) => console.log(`req w/ id=${req}`))
+    );
+  }
+
   createPet(pet: Pet): Observable<Pet> {
     return this.http.post(this.apiUrl, pet, this.httpOptions)
     .pipe(

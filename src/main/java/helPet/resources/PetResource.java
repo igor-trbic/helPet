@@ -36,6 +36,21 @@ public class PetResource {
         }
     }
 
+    @GET
+    @Path("/{id}")
+    public Response getPet(@AuthMe User user,
+                           @PathParam("id") Long id) {
+        try {
+            Pet pet = petManager.getPet(user, id);
+            if (pet != null) {
+                return Response.ok(pet).build();
+            }
+            return Response.ok("Cannot retrieve pets").build();
+        } catch (Exception ex) {
+            return Response.ok("Cannot retrieve pets").build();
+        }
+    }
+
     @POST
     public Response createPet(@AuthMe User user,
                               Pet pet) {

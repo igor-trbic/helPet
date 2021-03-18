@@ -10,6 +10,8 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.statement.UseRowMapper;
 import org.jdbi.v3.sqlobject.transaction.Transactional;
 
+import java.util.List;
+
 public interface PetAttributeDAO extends Transactional<PetAttributeDAO> {
     @SqlUpdate("INSERT INTO public.pet_attribute (id, name, value, pet_id, status, created_on, created_by, updated_on, updated_by " +
             " ) VALUES ( nextval('pet_attribute_seq'), :name, :value, :petId, :status, localtimestamp, :createdBy, null, null)")
@@ -25,4 +27,8 @@ public interface PetAttributeDAO extends Transactional<PetAttributeDAO> {
 
     @SqlUpdate("UPDATE public.pet_attribute SET status = 109, updated_by = :user, updated_on = localtimestamp WHERE id = :id")
     int remove(@Bind("id") Long id, @Bind("user") String user);
+
+    @SqlQuery("SELECT * FROM public.pet_attribute WHERE pet_id = :petId AND status != 109")
+    @UseRowMapper(PetAttributeMapper.class)
+    List<PetAttribute> findActiveByPetId(@Bind("petId") Long petId);
 }
