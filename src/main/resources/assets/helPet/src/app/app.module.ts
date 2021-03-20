@@ -22,6 +22,7 @@ import { MedicationsComponent } from './medications/medications.component';
 import { DiagnosesComponent } from './diagnoses/diagnoses.component';
 import { PetComponent } from './pet/pet.component';
 import { PetAttributesComponent } from './pet-attributes/pet-attributes.component';
+import { BusinessRoleTypeComponent } from './business-role-type/business-role-type.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PetAttributesComponent } from './pet-attributes/pet-attributes.componen
     MedicationsComponent,
     DiagnosesComponent,
     PetComponent,
-    PetAttributesComponent
+    PetAttributesComponent,
+    BusinessRoleTypeComponent
   ],
   imports: [
     BrowserModule,

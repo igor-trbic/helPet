@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppointmantsComponent } from './appointmants/appointmants.component';
+import { BusinessRoleTypeComponent } from './business-role-type/business-role-type.component';
 import { DiagnosesComponent } from './diagnoses/diagnoses.component';
 import { LoginComponent } from './login/login.component';
 import { MedicationsComponent } from './medications/medications.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'staff', component: StaffComponent },
   { path: 'medications', component: MedicationsComponent },
   { path: 'diagnoses', component: DiagnosesComponent },
+  { path: 'business-role', component: BusinessRoleTypeComponent },
 ];
 
 @NgModule({

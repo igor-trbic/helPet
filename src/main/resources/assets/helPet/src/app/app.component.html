@@ -37,6 +37,11 @@
         <i class="fas fa-fw fa-book"></i>
         <span>Diagnose</span></a>
     </li>
+    <li class="nav-item" *ngIf="business">
+      <a class="nav-link" routerLink="/business-role" routerLinkActive="active">
+        <i class="fas fa-fw fa-shield-alt"></i>
+        <span>Business Role</span></a>
+    </li>
     <li class="nav-item">
       <a class="nav-link" (click)="logout()">
         <i class="fas fa-fw fa-sign-out-alt"></i>

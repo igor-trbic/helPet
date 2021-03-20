@@ -1,7 +1,9 @@
 package helPet;
 
+import helPet.entity.BusinessRoleType;
 import helPet.managers.AddressManager;
 import helPet.managers.AuthManager;
+import helPet.managers.BusinessRoleTypeManager;
 import helPet.managers.EmailManager;
 import helPet.managers.PetAttributeManager;
 import helPet.managers.PetManager;
@@ -32,6 +34,7 @@ public enum HelPetService {
     private PhoneManager phoneManager;
     private AddressManager addressManager;
     private EmailManager emailManager;
+    private BusinessRoleTypeManager businessRoleTypeManager;
 
     public static Environment getEnvironment() {
         return INSTANCE.environment;
@@ -119,5 +122,13 @@ public enum HelPetService {
 
     public static void setPetAttributeManager(PetAttributeManager petAttributeManager) {
         INSTANCE.petAttributeManager = petAttributeManager;
+    }
+
+    public static BusinessRoleTypeManager getBusinessRoleTypeManager() {
+        return INSTANCE.businessRoleTypeManager;
+    }
+
+    public static void setBusinessRoleTypeManager(BusinessRoleTypeManager businessRoleTypeManager) {
+        INSTANCE.businessRoleTypeManager = businessRoleTypeManager;
     }
 }

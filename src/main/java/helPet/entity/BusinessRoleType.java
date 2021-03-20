@@ -5,6 +5,7 @@ import helPet.entity.util.EntityWithStatus;
 public class BusinessRoleType extends EntityWithStatus {
     private Long id;
     private String businessRoleName;
+    private Long businessId;
 
     public Long getId() {
         return id;
@@ -20,5 +21,13 @@ public class BusinessRoleType extends EntityWithStatus {
 
     public void setBusinessRoleName(String businessRoleName) {
         this.businessRoleName = businessRoleName;
+    }
+
+    public Long getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(Long businessId) {
+        this.businessId = businessId;
     }
 }

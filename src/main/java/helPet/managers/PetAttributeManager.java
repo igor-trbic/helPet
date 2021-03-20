@@ -90,7 +90,7 @@ public class PetAttributeManager {
             long updatedFlag = petAttributeDAO.update(petAttribute);
             if (updatedFlag == 0) {
                 // TODO: implement client error
-                throw new Exception("Cannot insert pet");
+                throw new Exception("Cannot insert pet attribute");
             }
 
             h.commit();
@@ -116,7 +116,7 @@ public class PetAttributeManager {
             long updatedFlag = petAttributeDAO.remove(attrId, user.getUsername());
             if (updatedFlag == 0) {
                 // TODO: implement client error
-                throw new Exception("Cannot insert pet");
+                throw new Exception("Cannot insert pet attribute");
             }
             success = true;
 
