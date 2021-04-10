@@ -33,4 +33,8 @@ public interface UserDAO extends Transactional<UserDAO> {
     @SqlQuery("SELECT * FROM public.user WHERE id = :id AND status != 109")
     @UseRowMapper(UserMapper.class)
     User findById(@Bind("id") Long id);
+
+    @SqlQuery("SELECT * FROM public.user WHERE username = :username AND status != 109")
+    @UseRowMapper(UserMapper.class)
+    User findByUsername(@Bind("username") String username);
 }

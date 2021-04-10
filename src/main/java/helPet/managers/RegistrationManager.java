@@ -1,12 +1,17 @@
 package helPet.managers;
 
+import helPet.dao.AuthTokenAttributeDAO;
 import helPet.dao.BusinessDAO;
+import helPet.dao.BusinessRoleDAO;
 import helPet.dao.BusinessStaffDAO;
 import helPet.dao.EmailDAO;
 import helPet.dao.UserAuthTokenDAO;
 import helPet.dao.UserDAO;
 import helPet.dto.BusinessRegisterDTO;
+import helPet.dto.UserDTO;
+import helPet.entity.AuthTokenAttribute;
 import helPet.entity.Business;
+import helPet.entity.BusinessRole;
 import helPet.entity.BusinessStaff;
 import helPet.entity.Email;
 import helPet.entity.User;
@@ -34,7 +39,7 @@ public class RegistrationManager {
         this.helPetSecurityManager = helPetSecurityManager;
     }
 
-    public Boolean register(User user) throws Exception {
+    public Boolean register(UserDTO userDTO, String tokenReg) throws Exception {
         Boolean success = false;
 
         Handle h = dbi.open();
@@ -43,39 +48,69 @@ public class RegistrationManager {
             UserDAO userDAO = h.attach(UserDAO.class);
             UserAuthTokenDAO userAuthTokenDAO = h.attach(UserAuthTokenDAO.class);
             EmailDAO emailDAO = h.attach(EmailDAO.class);
+            BusinessStaffDAO businessStaffDAO = h.attach(BusinessStaffDAO.class);
+            BusinessRoleDAO businessRoleDAO = h.attach(BusinessRoleDAO.class);
+            AuthTokenAttributeDAO authTokenAttributeDAO = h.attach(AuthTokenAttributeDAO.class);
 
             // TODO: Encrypt pass
-            user.setStatus(EntityStatus.PENDING);
-            user.setDateOfBirth(new Date());
-            user.setCreatedBy(SYSYEM_NAME);
-            long userId = userDAO.insert(user);
+            userDTO.setStatus(EntityStatus.PENDING);
+            userDTO.setDateOfBirth(new Date());
+            userDTO.setCreatedBy(SYSYEM_NAME);
+            long userId = userDAO.insert(userDTO);
             if (userId == 0) {
                 throw new Exception("Cannot create user");
             }
-            user.setId(userId);
+            userDTO.setId(userId);
 
             UserAuthToken userAuthToken = new UserAuthToken();
-            userAuthToken.setUserId(user.getId());
+            userAuthToken.setUserId(userDTO.getId());
             userAuthToken.setCreatedOn(new Date());
-            String token = helPetSecurityManager.generateToken(user.getUsername());
+            String token = helPetSecurityManager.generateToken(userDTO.getUsername());
             userAuthToken.setToken(token);
             Date now = new Date();
             userAuthToken.setExpiryTime(DateUtils.addHours(now, 24));
             userAuthTokenDAO.insert(userAuthToken);
 
             Email email = new Email();
-            email.setEmailAddress(user.getUsername());
-            email.setUserId(user.getId());
+            email.setEmailAddress(userDTO.getUsername());
+            email.setUserId(userDTO.getId());
             email.setEmailType("PERSONAL");
             email.setIsPrimary(true);
             email.setCreatedBy(SYSYEM_NAME);
+            email.setStatus(EntityStatus.ACTIVE);
             long emailFlag = emailDAO.insert(email);
             if (emailFlag == 0) {
                 throw new Exception("Cannot create email");
             }
 
+            if (userDTO.getBusinessId() != null && tokenReg != null) {
+                BusinessStaff businessStaff = new BusinessStaff();
+                businessStaff.setBusinessId(userDTO.getBusinessId());
+                businessStaff.setUserId(userDTO.getId());
+                long flag = businessStaffDAO.insert(businessStaff);
+                if (flag == 0) {
+                    throw new Exception("Cannot insert business staff");
+                }
+
+                AuthTokenAttribute authTokenAttribute = authTokenAttributeDAO.findByTokenAndAttrName(tokenReg, "staffRole");
+                if (authTokenAttribute == null) {
+                    throw new Exception("Cannot find appropriate role");
+                }
+
+                BusinessRole businessRole = new BusinessRole();
+                businessRole.setStatus(EntityStatus.ACTIVE);
+                businessRole.setBusinessRoleTypeId(Long.valueOf(authTokenAttribute.getAttrValue()));
+                businessRole.setBusinessStaffId(businessStaff.getId());
+                businessRole.setCreatedBy(SYSYEM_NAME);
+                long bflag = businessRoleDAO.insert(businessRole);
+                if (bflag == 0) {
+                    throw new Exception("Cannot insert business role");
+                }
+            }
+
             EmailSender emailSender = new EmailSender();
-            emailSender.sendMail(user.getUsername(), "Registration", "localhost:8080/helpet/register/" + userAuthToken.getToken());
+            // TODO: Create proper confirm registration page
+            emailSender.sendMail(userDTO.getUsername(), "Registration", "localhost:8080/helpet/register/" + userAuthToken.getToken());
 
             h.commit();
             success = true;

@@ -5,4 +5,5 @@ export class User extends Entity {
   firstName: string;
   lastName: string;
   password: string;
+  id: number;
 }

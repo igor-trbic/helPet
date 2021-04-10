@@ -25,4 +25,8 @@ public interface BusinessRoleDAO extends Transactional<BusinessRoleDAO> {
 
     @SqlUpdate("UPDATE public.business_role SET status = 109, updated_by = :user, updated_on = localtimestamp WHERE id = :id")
     int remove(@Bind("id") Long id, @Bind("user") String user);
+
+    @SqlQuery("SELECT * FROM public.business_role WHERE business_staff_id = :businessStaffId AND status != 109")
+    @UseRowMapper(BusinessRoleMapper.class)
+    BusinessRole findByStaffId(@Bind("businessStaffId") Long businessStaffId);
 }

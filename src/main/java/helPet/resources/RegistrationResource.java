@@ -1,6 +1,7 @@
 package helPet.resources;
 
 import helPet.dto.BusinessRegisterDTO;
+import helPet.dto.UserDTO;
 import helPet.entity.User;
 import helPet.managers.RegistrationManager;
 
@@ -8,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 @Path("/register")
@@ -20,9 +22,10 @@ public class RegistrationResource {
     }
 
     @POST
-    public Response register(User user) {
+    public Response register(UserDTO userDTO,
+                             @QueryParam("token") String token) {
         try {
-            registrationManager.register(user);
+            registrationManager.register(userDTO, token);
             return Response.ok("Successful registration!").build();
         } catch (Exception ex) {
             return Response.serverError().build();

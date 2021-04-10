@@ -979,4 +979,24 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE public.user_auth_token ADD CONSTRAINT user_auth_token_uq UNIQUE (user_id);
 -- ddl-end --
 
+-- object: public.auth_token_attribute | type: TABLE --
+-- DROP TABLE IF EXISTS public.auth_token_attribute CASCADE;
+CREATE TABLE public.auth_token_attribute (
+	attr_name text NOT NULL,
+	attr_value text NOT NULL,
+	created_on timestamp NOT NULL,
+	created_by text,
+	token_user_auth_token text
+);
+-- ddl-end --
+-- ALTER TABLE public.auth_token_attribute OWNER TO postgres;
+-- ddl-end --
+
+-- object: user_auth_token_fk | type: CONSTRAINT --
+-- ALTER TABLE public.auth_token_attribute DROP CONSTRAINT IF EXISTS user_auth_token_fk CASCADE;
+ALTER TABLE public.auth_token_attribute ADD CONSTRAINT user_auth_token_fk FOREIGN KEY (token_user_auth_token)
+REFERENCES public.user_auth_token (token) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
 

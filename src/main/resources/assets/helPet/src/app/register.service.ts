@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from './models/user.model';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BusinessRegister } from './models/businesRegister.model';
+import { UserDTO } from './models/user.dto.model';
 
 @Injectable()
 export class RegisterService {
@@ -18,9 +19,13 @@ export class RegisterService {
   constructor(
     private http: HttpClient) { }
 
-  register(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user, this.httpOptions).pipe(
-      tap((newUser: User) => console.log(`added hero w/ id=${newUser.username}`))
+  register(user: UserDTO, token?: String): Observable<UserDTO> {
+    let url = this.apiUrl;
+    if (token) {
+      url += "?token=" + token;
+    }
+    return this.http.post<UserDTO>(url, user, this.httpOptions).pipe(
+      tap((newUser: UserDTO) => console.log(`added hero w/ id=${newUser.username}`))
     );
   }
 

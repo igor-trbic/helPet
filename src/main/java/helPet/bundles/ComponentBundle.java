@@ -10,6 +10,7 @@ import helPet.hk2.ImmediateFeature;
 import helPet.managers.AddressManager;
 import helPet.managers.AuthManager;
 import helPet.managers.BusinessRoleTypeManager;
+import helPet.managers.BusinessStaffManager;
 import helPet.managers.EmailManager;
 import helPet.managers.PetAttributeManager;
 import helPet.managers.PetManager;
@@ -19,6 +20,7 @@ import helPet.managers.HelPetSecurityManager;
 import helPet.resources.AddressResource;
 import helPet.resources.AuthResource;
 import helPet.resources.BusinessRoleTypeResource;
+import helPet.resources.BusinessStaffResource;
 import helPet.resources.EmailResource;
 import helPet.resources.PetAttributeResource;
 import helPet.resources.PetResource;
@@ -97,6 +99,7 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
         resources.add(new PhoneResource(HelPetService.getPhoneManager()));
         resources.add(new EmailResource(HelPetService.getEmailManager()));
         resources.add(new BusinessRoleTypeResource(HelPetService.getBusinessRoleTypeManager()));
+        resources.add(new BusinessStaffResource(HelPetService.getBusinessStaffManager()));
 
         for(Object r : resources){
             environment.jersey().register(r);
@@ -120,6 +123,7 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
         HelPetService.setAddressManager(new AddressManager(dbi));
         HelPetService.setEmailManager(new EmailManager(dbi));
         HelPetService.setBusinessRoleTypeManager(new BusinessRoleTypeManager(dbi));
+        HelPetService.setBusinessStaffManager(new BusinessStaffManager(dbi, HelPetService.getHelPetSecurityManager()));
 
         environment.jersey().getResourceConfig().register(ImmediateFeature.class);
         environment.jersey().getResourceConfig().register(new AbstractBinder() {
