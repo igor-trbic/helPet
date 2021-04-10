@@ -9,7 +9,8 @@
 -- These commands were put in this file only as a convenience.
 -- -- object: helpet | type: DATABASE --
 -- -- DROP DATABASE IF EXISTS helpet;
--- CREATE DATABASE helpet;
+-- CREATE DATABASE helpet
+-- 	OWNER = postgres;
 -- -- ddl-end --
 -- 
 
@@ -241,8 +242,8 @@ CREATE TABLE public.business_role (
 	created_by text NOT NULL,
 	updated_on timestamp,
 	updated_by text,
-	business_staff_id bigint,
-	business_role_type_id bigint,
+	id_business_role_type bigint,
+	id_business_staff bigint,
 	CONSTRAINT business_role_pk PRIMARY KEY (id)
 
 );
@@ -385,30 +386,6 @@ ALTER TABLE public.business_staff ADD CONSTRAINT business_staff_uq UNIQUE (user_
 ALTER TABLE public.business_staff ADD CONSTRAINT business_fk FOREIGN KEY (business_id)
 REFERENCES public.business (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
--- ddl-end --
-
--- object: business_staff_fk | type: CONSTRAINT --
--- ALTER TABLE public.business_role DROP CONSTRAINT IF EXISTS business_staff_fk CASCADE;
-ALTER TABLE public.business_role ADD CONSTRAINT business_staff_fk FOREIGN KEY (business_staff_id)
-REFERENCES public.business_staff (id) MATCH FULL
-ON DELETE SET NULL ON UPDATE CASCADE;
--- ddl-end --
-
--- object: business_role_uq | type: CONSTRAINT --
--- ALTER TABLE public.business_role DROP CONSTRAINT IF EXISTS business_role_uq CASCADE;
-ALTER TABLE public.business_role ADD CONSTRAINT business_role_uq UNIQUE (business_staff_id);
--- ddl-end --
-
--- object: business_role_type_fk | type: CONSTRAINT --
--- ALTER TABLE public.business_role DROP CONSTRAINT IF EXISTS business_role_type_fk CASCADE;
-ALTER TABLE public.business_role ADD CONSTRAINT business_role_type_fk FOREIGN KEY (business_role_type_id)
-REFERENCES public.business_role_type (id) MATCH FULL
-ON DELETE SET NULL ON UPDATE CASCADE;
--- ddl-end --
-
--- object: business_role_uq1 | type: CONSTRAINT --
--- ALTER TABLE public.business_role DROP CONSTRAINT IF EXISTS business_role_uq1 CASCADE;
-ALTER TABLE public.business_role ADD CONSTRAINT business_role_uq1 UNIQUE (business_role_type_id);
 -- ddl-end --
 
 -- object: public.pet_seq | type: SEQUENCE --
@@ -996,6 +973,20 @@ CREATE TABLE public.auth_token_attribute (
 -- ALTER TABLE public.auth_token_attribute DROP CONSTRAINT IF EXISTS user_auth_token_fk CASCADE;
 ALTER TABLE public.auth_token_attribute ADD CONSTRAINT user_auth_token_fk FOREIGN KEY (token_user_auth_token)
 REFERENCES public.user_auth_token (token) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: business_role_type_fk | type: CONSTRAINT --
+-- ALTER TABLE public.business_role DROP CONSTRAINT IF EXISTS business_role_type_fk CASCADE;
+ALTER TABLE public.business_role ADD CONSTRAINT business_role_type_fk FOREIGN KEY (id_business_role_type)
+REFERENCES public.business_role_type (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: business_staff_fk | type: CONSTRAINT --
+-- ALTER TABLE public.business_role DROP CONSTRAINT IF EXISTS business_staff_fk CASCADE;
+ALTER TABLE public.business_role ADD CONSTRAINT business_staff_fk FOREIGN KEY (id_business_staff)
+REFERENCES public.business_staff (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
