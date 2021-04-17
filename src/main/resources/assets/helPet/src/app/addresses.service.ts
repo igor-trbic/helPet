@@ -46,4 +46,18 @@ export class AddressesService {
       tap((req: Address) => console.log(`req w/ id=${req}`))
     );
   }
+
+  createBusinessAddress(id, address: Address): Observable<Address> {
+    return this.http.post(this.apiUrl + '/business/' + id, address, this.httpOptions)
+    .pipe(
+      tap((req: Address) => console.log(`req w/ id=${req}`))
+    );
+  }
+
+  getBusinessAddresses(id): Observable<Address[]> {
+    return this.http.get(this.apiUrl + '/business/' + id, this.httpOptions)
+    .pipe(
+      tap((req: Address[]) => console.log(`req w/ id=${req}`))
+    );
+  }
 }

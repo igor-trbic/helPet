@@ -1,8 +1,11 @@
 package helPet.managers;
 
 import helPet.dao.AddressDAO;
+import helPet.dao.BusinessAddressDAO;
 import helPet.dao.UserAddressDAO;
+import helPet.dto.UserDTO;
 import helPet.entity.Address;
+import helPet.entity.BusinessAddress;
 import helPet.entity.User;
 import helPet.entity.UserAddress;
 import helPet.entity.util.EntityStatus;
@@ -126,5 +129,61 @@ public class AddressManager {
             h.close();
         }
         return success;
+    }
+
+    public Address createBusinessAddress(Address address, Long businessId, User user) throws Exception {
+        Handle h = dbi.open();
+        try {
+            h.begin();
+            AddressDAO addressDAO = h.attach(AddressDAO.class);
+            BusinessAddressDAO businessAddressDAO = h.attach(BusinessAddressDAO.class);
+
+            address.setCreatedBy(user.getUsername());
+            address.setStatus(EntityStatus.ACTIVE);
+            long inserted = addressDAO.insert(address);
+            if (inserted == 0) {
+                // TODO: implement client error
+                throw new Exception("Cannot insert address");
+            }
+            address.setId(inserted);
+
+            BusinessAddress businessAddress = new BusinessAddress();
+            businessAddress.setAddressId(address.getId());
+            businessAddress.setBusinessId(businessId);
+            long insertedOwner = businessAddressDAO.insert(businessAddress);
+            if (insertedOwner == 0) {
+                // TODO: implement client error
+                throw new Exception("Cannot insert business address");
+            }
+
+            h.commit();
+        } catch (Exception ex) {
+            address = null;
+            LOG.error(ex.getMessage());
+            h.rollback();
+        } finally {
+            h.close();
+        }
+        return address;
+    }
+
+    public List<Address> getBusinessAddresses(Long id, User user) {
+        Handle h = dbi.open();
+        List<Address> addresses = new ArrayList<>();
+        try {
+            h.begin();
+            AddressDAO addressDAO = h.attach(AddressDAO.class);
+
+            addresses = addressDAO.findByBusinessId(id);
+
+            h.commit();
+        } catch (Exception ex) {
+            addresses = null;
+            LOG.error(ex.getMessage());
+            h.rollback();
+        } finally {
+            h.close();
+        }
+        return addresses;
     }
 }

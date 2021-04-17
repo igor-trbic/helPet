@@ -31,4 +31,8 @@ public interface AddressDAO extends Transactional<AddressDAO> {
     @SqlQuery("SELECT * FROM public.address a JOIN public.user_address ua ON (ua.address_id = a.id) WHERE ua.user_id = :userId AND status != 109")
     @UseRowMapper(AddressMapper.class)
     List<Address> findByUserId(@Bind("userId") Long userId);
+
+    @SqlQuery("SELECT * FROM public.address a JOIN public.business_address ba ON (ba.address_id = a.id) WHERE ba.business_id = :businessId AND status != 109")
+    @UseRowMapper(AddressMapper.class)
+    List<Address> findByBusinessId(@Bind("businessId") Long businessId);
 }

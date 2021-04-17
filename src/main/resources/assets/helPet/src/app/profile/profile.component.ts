@@ -16,19 +16,12 @@ export class ProfileComponent implements OnInit {
 
   constructor() { }
 
-  createEmail() {
-
-  }
-
-  createAddress() {
-
-  }
-
-  createPhone() {
-
-  }
+  businessId: number = null;
   
   ngOnInit(): void {
+    this.businessId = Number.parseInt(localStorage.getItem("businessId"));
+    console.log(this.businessId);
+    
   }
 
 }

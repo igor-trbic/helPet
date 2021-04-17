@@ -80,4 +80,35 @@ public class AddressResource {
             return Response.ok(false).build();
         }
     }
+
+    @POST
+    @Path("/business/{id}")
+    public Response createBusinessAddress(@AuthMe User user,
+                                          @PathParam("id") Long id,
+                                          Address address) {
+        try {
+            Address newAddress = addressManager.createBusinessAddress(address, id, user);
+            if (newAddress != null) {
+                return Response.ok(newAddress).build();
+            }
+            return Response.ok("Cannot create address").build();
+        } catch (Exception ex) {
+            return Response.ok("Cannot create address").build();
+        }
+    }
+
+    @GET
+    @Path("/business/{id}")
+    public Response getBusinessAddresses(@AuthMe User user,
+                                         @PathParam("id") Long id) {
+        try {
+            List<Address> pets = addressManager.getBusinessAddresses(id, user);
+            if (pets != null) {
+                return Response.ok(pets).build();
+            }
+            return Response.ok("Cannot retrieve addresses").build();
+        } catch (Exception ex) {
+            return Response.ok("Cannot retrieve addresses").build();
+        }
+    }
 }

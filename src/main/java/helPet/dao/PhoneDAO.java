@@ -31,4 +31,8 @@ public interface PhoneDAO extends Transactional<AddressDAO> {
     @SqlQuery("SELECT * FROM public.phone p JOIN public.user_phone up ON (up.phone_id = p.id) WHERE up.user_id = :userId AND status != 109")
     @UseRowMapper(PhoneMapper.class)
     List<Phone> findByUserId(@Bind("userId") Long userId);
+
+    @SqlQuery("SELECT * FROM public.phone p JOIN public.business_phone bp ON (bp.phone_id = p.id) WHERE bp.business_id = :businessId AND status != 109")
+    @UseRowMapper(PhoneMapper.class)
+    List<Phone> findByBusinessId(@Bind("businessId") Long businessId);
 }

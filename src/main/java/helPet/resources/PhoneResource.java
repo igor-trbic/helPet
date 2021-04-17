@@ -53,8 +53,8 @@ public class PhoneResource {
     @PUT
     @Path("/{id}")
     public Response updatePhone(@AuthMe User user,
-                                  @PathParam("id") Long id,
-                                  Phone phone) {
+                                @PathParam("id") Long id,
+                                Phone phone) {
         phone.setId(id);
         try {
             Phone updatePhone = phoneManager.updatePhone(phone, user);
@@ -70,7 +70,7 @@ public class PhoneResource {
     @DELETE
     @Path("/{id}")
     public Response removePhone(@AuthMe User user,
-                                  @PathParam("id") Long id) {
+                                @PathParam("id") Long id) {
         try {
             Boolean removed = phoneManager.removePhone(id, user);
             if (removed) {
@@ -79,6 +79,37 @@ public class PhoneResource {
             return Response.ok(false).build();
         } catch (Exception ex) {
             return Response.ok(false).build();
+        }
+    }
+
+    @POST
+    @Path("/business/{id}")
+    public Response createBusinessPhone(@AuthMe User user,
+                                        @PathParam("id") Long id,
+                                        Phone phone) {
+        try {
+            Phone newPhone = phoneManager.createBusinessPhone(phone, id, user);
+            if (newPhone != null) {
+                return Response.ok(newPhone).build();
+            }
+            return Response.ok("Cannot create phone").build();
+        } catch (Exception ex) {
+            return Response.ok("Cannot create phone").build();
+        }
+    }
+
+    @GET
+    @Path("/business/{id}")
+    public Response getBusinessPhones(@AuthMe User user,
+                                      @PathParam("id") Long id) {
+        try {
+            List<Phone> pets = phoneManager.getBusinessPhones(id, user);
+            if (pets != null) {
+                return Response.ok(pets).build();
+            }
+            return Response.ok("Cannot retrieve phones").build();
+        } catch (Exception ex) {
+            return Response.ok("Cannot retrieve phones").build();
         }
     }
 }

@@ -21,15 +21,23 @@ export class PhonesComponent implements OnInit {
   modalConfig: ModalConfig = {
     modalTitle: 'Create new phone'
   };
+  businessId: number = null;
 
   createPhone() {
     this.phone = new Phone();
     return this.modalComponent.open().then((result) => {
       if (result === 'Save') {
-        this.phoneService.createPhone(this.phone).subscribe(resp => {
-          console.log(resp);
-          this.getAllPhones();
-        })
+        if (this.businessId) {
+          this.phoneService.createBusinessPhone(this.businessId, this.phone).subscribe(resp => {
+            console.log(resp);
+            this.getAllPhones();
+          });
+        } else {
+          this.phoneService.createPhone(this.phone).subscribe(resp => {
+            console.log(resp);
+            this.getAllPhones();
+          });
+        }
       }
     }, (reason) => {
       console.log("Error happened: ", reason);
@@ -43,7 +51,7 @@ export class PhonesComponent implements OnInit {
         this.phoneService.updatePhone(this.phone).subscribe(resp => {
           console.log(resp);
           this.getAllPhones();
-        })
+        });
       }
     }, (reason) => {
       console.log("Error happened: ", reason);
@@ -54,16 +62,24 @@ export class PhonesComponent implements OnInit {
     this.phoneService.removePhone(phoneId).subscribe(resp => {
       console.log(resp);
       this.getAllPhones();
-    })
-  }
-
-  getAllPhones() {
-    this.phoneService.getPhones().subscribe(resp => {
-      this.phones = resp;
     });
   }
 
+  getAllPhones() {
+    if (this.businessId) {
+      this.phoneService.getBusinessPhones(this.businessId).subscribe(resp => {
+        this.phones = resp;
+      });
+    } else {
+      this.phoneService.getPhones().subscribe(resp => {
+        this.phones = resp;
+      });
+    }
+  }
+
   ngOnInit(): void {
+    this.businessId = Number.parseInt(localStorage.getItem("businessId"));
+    console.log(this.businessId);
     this.getAllPhones();
   }
 

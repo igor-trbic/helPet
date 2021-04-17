@@ -21,15 +21,23 @@ export class AddressesComponent implements OnInit {
   modalConfig: ModalConfig = {
     modalTitle: 'Create new address'
   };
+  businessId: number = null;
 
   createAddress() {
     this.address = new Address();
     return this.modalComponent.open().then((result) => {
       if (result === 'Save') {
-        this.addressService.createAddress(this.address).subscribe(resp => {
-          console.log(resp);
-          this.getAllAddresses();
-        })
+        if (this.businessId) {
+          this.addressService.createBusinessAddress(this.businessId, this.address).subscribe(resp => {
+            console.log(resp);
+            this.getAllAddresses();
+          });
+        } else {
+          this.addressService.createAddress(this.address).subscribe(resp => {
+            console.log(resp);
+            this.getAllAddresses();
+          });
+        }
       }
     }, (reason) => {
       console.log("Error happened: ", reason);
@@ -43,7 +51,7 @@ export class AddressesComponent implements OnInit {
         this.addressService.updateAddress(this.address).subscribe(resp => {
           console.log(resp);
           this.getAllAddresses();
-        })
+        });
       }
     }, (reason) => {
       console.log("Error happened: ", reason);
@@ -54,16 +62,23 @@ export class AddressesComponent implements OnInit {
     this.addressService.removeAddress(addressId).subscribe(resp => {
       console.log(resp);
       this.getAllAddresses();
-    })
-  }
-
-  getAllAddresses() {
-    this.addressService.getAddresses().subscribe(resp => {
-      this.addresses = resp;
     });
   }
 
+  getAllAddresses() {
+    if (this.businessId) {
+      this.addressService.getBusinessAddresses(this.businessId).subscribe(resp => {
+        this.addresses = resp;
+      });
+    } else {
+      this.addressService.getAddresses().subscribe(resp => {
+        this.addresses = resp;
+      });
+    }
+  }
+
   ngOnInit(): void {
+    this.businessId = Number.parseInt(localStorage.getItem("businessId"));
     this.getAllAddresses();
   }
 

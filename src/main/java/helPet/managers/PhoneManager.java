@@ -1,7 +1,9 @@
 package helPet.managers;
 
+import helPet.dao.BusinessPhoneDAO;
 import helPet.dao.PhoneDAO;
 import helPet.dao.UserPhoneDAO;
+import helPet.entity.BusinessPhone;
 import helPet.entity.Phone;
 import helPet.entity.User;
 import helPet.entity.UserPhone;
@@ -126,5 +128,61 @@ public class PhoneManager {
             h.close();
         }
         return success;
+    }
+
+    public Phone createBusinessPhone(Phone phone, Long businessId, User user) throws Exception {
+        Handle h = dbi.open();
+        try {
+            h.begin();
+            PhoneDAO phoneDAO = h.attach(PhoneDAO.class);
+            BusinessPhoneDAO businessPhoneDAO = h.attach(BusinessPhoneDAO.class);
+
+            phone.setCreatedBy(user.getUsername());
+            phone.setStatus(EntityStatus.ACTIVE);
+            long inserted = phoneDAO.insert(phone);
+            if (inserted == 0) {
+                // TODO: implement client error
+                throw new Exception("Cannot insert phone");
+            }
+            phone.setId(inserted);
+
+            BusinessPhone userPhone = new BusinessPhone();
+            userPhone.setPhoneId(phone.getId());
+            userPhone.setBusinessId(businessId);
+            long insertedOwner = businessPhoneDAO.insert(userPhone);
+            if (insertedOwner == 0) {
+                // TODO: implement client error
+                throw new Exception("Cannot insert phone");
+            }
+
+            h.commit();
+        } catch (Exception ex) {
+            phone = null;
+            LOG.error(ex.getMessage());
+            h.rollback();
+        } finally {
+            h.close();
+        }
+        return phone;
+    }
+
+    public List<Phone> getBusinessPhones(Long id, User user) {
+        Handle h = dbi.open();
+        List<Phone> phones = new ArrayList<>();
+        try {
+            h.begin();
+            PhoneDAO phoneDAO = h.attach(PhoneDAO.class);
+
+            phones = phoneDAO.findByBusinessId(id);
+
+            h.commit();
+        } catch (Exception ex) {
+            phones = null;
+            LOG.error(ex.getMessage());
+            h.rollback();
+        } finally {
+            h.close();
+        }
+        return phones;
     }
 }

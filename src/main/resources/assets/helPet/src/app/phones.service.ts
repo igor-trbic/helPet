@@ -34,7 +34,7 @@ export class PhonesService {
   }
 
   updatePhone(phone: Phone): Observable<Phone> {
-    return this.http.put(this.apiUrl + '/' + phone.id, Phone, this.httpOptions)
+    return this.http.put(this.apiUrl + '/' + phone.id, phone, this.httpOptions)
     .pipe(
       tap((req: Phone) => console.log(`req w/ id=${req}`))
     );
@@ -44,6 +44,21 @@ export class PhonesService {
     return this.http.delete(this.apiUrl + '/' + phoneId, this.httpOptions)
     .pipe(
       tap((req: Phone) => console.log(`req w/ id=${req}`))
+    );
+  }
+
+
+  createBusinessPhone(id, phone: Phone): Observable<Phone> {
+    return this.http.post(this.apiUrl + '/business/' + id, phone, this.httpOptions)
+    .pipe(
+      tap((req: Phone) => console.log(`req w/ id=${req}`))
+    );
+  }
+
+  getBusinessPhones(id): Observable<Phone[]> {
+    return this.http.get(this.apiUrl + '/business/' + id, this.httpOptions)
+    .pipe(
+      tap((req: Phone[]) => console.log(`req w/ id=${req}`))
     );
   }
 }
