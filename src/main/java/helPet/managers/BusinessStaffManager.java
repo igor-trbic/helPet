@@ -32,7 +32,6 @@ public class BusinessStaffManager {
         this.helPetSecurityManager = helPetSecurityManager;
     }
 
-    // TODO: Do the 4 below
     public List<BusinessStaffDTO> get(Long businessId, User user) {
         Handle h = dbi.open();
         List<BusinessStaffDTO> businessStaffs = new ArrayList<>();

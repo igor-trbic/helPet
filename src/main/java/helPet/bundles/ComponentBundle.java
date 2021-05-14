@@ -8,7 +8,9 @@ import helPet.dao.common.EntityStatusAsIntArgFactory;
 import helPet.entity.User;
 import helPet.hk2.ImmediateFeature;
 import helPet.managers.AddressManager;
+import helPet.managers.AppointmentManager;
 import helPet.managers.AuthManager;
+import helPet.managers.BusinessManager;
 import helPet.managers.BusinessRoleTypeManager;
 import helPet.managers.BusinessStaffManager;
 import helPet.managers.EmailManager;
@@ -18,7 +20,9 @@ import helPet.managers.PhoneManager;
 import helPet.managers.RegistrationManager;
 import helPet.managers.HelPetSecurityManager;
 import helPet.resources.AddressResource;
+import helPet.resources.AppointmentResource;
 import helPet.resources.AuthResource;
+import helPet.resources.BusinessResource;
 import helPet.resources.BusinessRoleTypeResource;
 import helPet.resources.BusinessStaffResource;
 import helPet.resources.EmailResource;
@@ -100,6 +104,8 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
         resources.add(new EmailResource(HelPetService.getEmailManager()));
         resources.add(new BusinessRoleTypeResource(HelPetService.getBusinessRoleTypeManager()));
         resources.add(new BusinessStaffResource(HelPetService.getBusinessStaffManager()));
+        resources.add(new BusinessResource(HelPetService.getBusinessManager()));
+        resources.add(new AppointmentResource(HelPetService.getAppointmentManager()));
 
         for(Object r : resources){
             environment.jersey().register(r);
@@ -124,6 +130,8 @@ public class ComponentBundle <T extends HelPetConfiguration> implements Configur
         HelPetService.setEmailManager(new EmailManager(dbi));
         HelPetService.setBusinessRoleTypeManager(new BusinessRoleTypeManager(dbi));
         HelPetService.setBusinessStaffManager(new BusinessStaffManager(dbi, HelPetService.getHelPetSecurityManager()));
+        HelPetService.setBusinessManager(new BusinessManager(dbi));
+        HelPetService.setAppointmentManager(new AppointmentManager(dbi));
 
         environment.jersey().getResourceConfig().register(ImmediateFeature.class);
         environment.jersey().getResourceConfig().register(new AbstractBinder() {

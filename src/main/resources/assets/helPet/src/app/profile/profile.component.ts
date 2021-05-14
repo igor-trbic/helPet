@@ -19,7 +19,10 @@ export class ProfileComponent implements OnInit {
   businessId: number = null;
   
   ngOnInit(): void {
-    this.businessId = Number.parseInt(localStorage.getItem("businessId"));
+    let bId = localStorage.getItem("businessId");
+    if (bId) {
+      this.businessId = Number.parseInt(bId);
+    }
     console.log(this.businessId);
     
   }

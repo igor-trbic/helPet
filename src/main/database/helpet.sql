@@ -556,18 +556,6 @@ REFERENCES public."user" (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: pet_fk | type: CONSTRAINT --
--- ALTER TABLE public.appointment DROP CONSTRAINT IF EXISTS pet_fk CASCADE;
-ALTER TABLE public.appointment ADD CONSTRAINT pet_fk FOREIGN KEY (pet_id)
-REFERENCES public.pet (id) MATCH FULL
-ON DELETE SET NULL ON UPDATE CASCADE;
--- ddl-end --
-
--- object: appointment_uq | type: CONSTRAINT --
--- ALTER TABLE public.appointment DROP CONSTRAINT IF EXISTS appointment_uq CASCADE;
-ALTER TABLE public.appointment ADD CONSTRAINT appointment_uq UNIQUE (pet_id);
--- ddl-end --
-
 -- object: public.therapy_seq | type: SEQUENCE --
 -- DROP SEQUENCE IF EXISTS public.therapy_seq CASCADE;
 CREATE SEQUENCE public.therapy_seq
@@ -987,6 +975,13 @@ ON DELETE SET NULL ON UPDATE CASCADE;
 -- ALTER TABLE public.business_role DROP CONSTRAINT IF EXISTS business_staff_fk CASCADE;
 ALTER TABLE public.business_role ADD CONSTRAINT business_staff_fk FOREIGN KEY (id_business_staff)
 REFERENCES public.business_staff (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: pet_fk | type: CONSTRAINT --
+-- ALTER TABLE public.appointment DROP CONSTRAINT IF EXISTS pet_fk CASCADE;
+ALTER TABLE public.appointment ADD CONSTRAINT pet_fk FOREIGN KEY (pet_id)
+REFERENCES public.pet (id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 

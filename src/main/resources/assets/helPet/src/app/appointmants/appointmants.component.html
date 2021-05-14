@@ -1,1 +1,98 @@
-<p>appointmants works!</p>
+<div class="row">
+    <div class="col-md-8">
+        <h1 class="h3 mb-2 text-gray-800">Your appointments</h1>
+        <p>You can manage yout appointments here</p>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary float-right" (click)="create()">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Date</th>
+            <th scope="col">Note</th>
+            <th scope="col">Status</th>
+            <th scope="col">Pet</th>
+            <th scope="col">Business</th>
+            <th scope="col" style="text-align: right;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let appointment of appointments">
+            <td>{{appointment.id}}</td>
+            <td>{{appointment.date | date:'yyyy-mm-dd HH:MM'}}</td>
+            <td class="text-truncate">{{appointment.note}}</td>
+            <td>{{appointment.status}}</td>
+            <td>{{appointment.pet.name}}</td>
+            <td>{{appointment.business.businessName}}</td>
+            <td class="float-right" *ngIf="businessId">
+                <button class="btn btn-danger ml-2" (click)="reject(appointment)" title="Reject">
+                    <i class="fa fa-times"></i>
+                </button>
+            </td>
+            <td class="float-right" *ngIf="businessId">
+                <button class="btn btn-success ml-2" (click)="approve(appointment)" title="Approve">
+                    <i class="fa fa-check"></i>
+                </button>
+            </td>
+            <td class=" float-right" *ngIf="!businessId">
+                <button class="btn btn-danger ml-2" (click)="remove(appointment.id)" title="Remove">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<modal #modal [modalConfig]="modalConfig">
+    <form class="user" #petForm="ngForm">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label for="dateOfBirth">Date</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                            name="dp" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label for="dateOfBirth">Time</label>
+                <ngb-timepicker [(ngModel)]="time" [minuteStep]="minuteStep" [meridian]="false" name="time"></ngb-timepicker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label for="dateOfBirth">Choose pet</label>
+                <ng-select [items]="pets" [(ngModel)]="appointment.petId" bindLabel="name" name="petName" bindValue="id">
+                </ng-select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label for="dateOfBirth">Choose business</label>
+                <ng-select [items]="businesses" [(ngModel)]="appointment.businessId" bindLabel="businessName" bindValue="id"
+                    name="businessName">
+                </ng-select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label for="dateOfBirth">Date</label>
+                <textarea type="email" class="form-control form-control-user" id="note" placeholder="Note" required
+                    [(ngModel)]="appointment.note" name="note" #note="ngModel">
+                </textarea>
+            </div>
+        </div>
+    </form>
+</modal>

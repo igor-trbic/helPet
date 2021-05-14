@@ -26,7 +26,8 @@ public class HelPetApplication extends Application<HelPetConfiguration> {
     public void initialize(final Bootstrap<HelPetConfiguration> bootstrap) {
         // TODO: application initialization
         bootstrap.addBundle(new ComponentBundle(helPetConfiguration));
-        bootstrap.getObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+//        bootstrap.getObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        bootstrap.getObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
     }
 
     @Override

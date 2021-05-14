@@ -7,8 +7,10 @@ import helPet.entity.User;
 import helPet.entity.util.EntityStatus;
 import helPet.jdbi.BaseTest;
 import org.jdbi.v3.core.Handle;
+import org.joda.time.DateTime;
 import org.junit.Test;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -62,7 +64,7 @@ public class AppointmentDAOTest extends BaseTest {
         appointment.setPetId(petId);
         appointment.setUserId(userId);
         appointment.setNote(STR_SAMPLE_1);
-        appointment.setDate(new Date());
+        appointment.setDate(new Timestamp(System.currentTimeMillis()));
         appointment.setCreatedBy(CREATED_BY);
         appointment.setStatus(EntityStatus.ACTIVE);
 

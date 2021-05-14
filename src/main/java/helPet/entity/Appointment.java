@@ -2,11 +2,11 @@ package helPet.entity;
 
 import helPet.entity.util.EntityWithStatus;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Appointment extends EntityWithStatus {
     private Long id;
-    private Date date;
+    private Timestamp date;
     private String note;
     private Long businessId;
     private Long userId;
@@ -20,12 +20,12 @@ public class Appointment extends EntityWithStatus {
         this.id = id;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(Timestamp timestamp) {
+        this.date = timestamp;
     }
 
     public String getNote() {

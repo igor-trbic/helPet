@@ -64,9 +64,6 @@
                 <label for="businessRoleName">Role</label>
                 <ng-select [items]="businessRoleTypes" [(ngModel)]="businessStaffDTO.businessRoleType" bindLabel="businessRoleName" name="businessRoleType">
                 </ng-select>
-                <h1>
-                    {{selectedRoleType | json}}
-                </h1>
             </div>
         </div>
     </form>
